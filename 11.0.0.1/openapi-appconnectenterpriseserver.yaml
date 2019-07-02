@@ -5,7 +5,7 @@ info:
   x-bhendi-keyspace: appconnect-enterprise
   version: 2.0.0
   title: App Connect Enterprise APIs
-  description: APIs for administering App Connect Enterprise integration nodes
+  description: APIs for administering App Connect Enterprise integration servers
 
 servers:
   - url: /apiv2
@@ -18,12 +18,6 @@ x-bhendi-resources:
     cassandra: false
     schema:
       $ref: '#/components/schemas/Application'
-
-  component:
-    type: normal
-    cassandra: false
-    schema:
-      $ref: '#/components/schemas/Component'
 
   document:
     type: singleton
@@ -42,12 +36,6 @@ x-bhendi-resources:
     cassandra: false
     schema:
       $ref: '#/components/schemas/Messageflow'
-
-  node:
-    type: singleton
-    cassandra: false
-    schema:
-      $ref: '#/components/schemas/Node'
 
   resource:
     type: normal
@@ -68,7 +56,7 @@ x-bhendi-resources:
       $ref: '#/components/schemas/RestAPI'
 
   server:
-    type: normal
+    type: singleton
     cassandra: false
     schema:
       $ref: '#/components/schemas/Server'
@@ -91,226 +79,20 @@ x-bhendi-resources:
     schema:
       $ref: '#/components/schemas/Subflow'
 
-  system:
-    type: singleton
-    cassandra: false
-    schema:
-      $ref: '#/components/schemas/System'
-
 paths:
 
   #---------------------------------------------------------------------------
-  # Node Object (Singleton)
+  # Server Object (Singleton)
   #---------------------------------------------------------------------------
   '/':
 
-    description: Node object operations
-
-    get:
-      summary: Get the Node object
-      description: Get the Node object
-      operationId: node_singletonGet
-      x-bhendi-operationId: node_singletonGet
-      x-bhendi-access: public
-      x-bhendi-stability: prototype
-      x-bhendi-cli: nodes:get
-      x-bhendi-cli-stability: prototype
-      x-bhendi-authorized-orgs: both
-      x-bhendi-oauth-required: false
-      x-bhendi-permission-required: false
-      externalDocs:
-        description: Additional documentation
-        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/node#get'
-      parameters:
-        - $ref: '#/components/parameters/depth'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Node'
-            application/yaml:
-              schema:
-                $ref: '#/components/schemas/Node'
-        5XX:
-          $ref: '#/components/responses/Error'
-      tags:
-        - 'Node'
-        - 'Resource: Node'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  #---------------------------------------------------------------------------
-  # System Object (Singleton)
-  #---------------------------------------------------------------------------
-  '/system':
-
-    description: System object operations
-
-    get:
-      summary: Get the System object
-      description: Get the System object
-      operationId: system_singletonGet
-      x-bhendi-operationId: system_singletonGet
-      x-bhendi-access: public
-      x-bhendi-stability: prototype
-      x-bhendi-cli: systems:get
-      x-bhendi-cli-stability: prototype
-      x-bhendi-authorized-orgs: both
-      x-bhendi-oauth-required: false
-      x-bhendi-permission-required: false
-      externalDocs:
-        description: Additional documentation
-        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/system#get'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System'
-            application/yaml:
-              schema:
-                $ref: '#/components/schemas/System'
-        5XX:
-          $ref: '#/components/responses/Error'
-      tags:
-        - 'System'
-        - 'Resource: System'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  #---------------------------------------------------------------------------
-  # Server Collection
-  #---------------------------------------------------------------------------
-  '/servers':
-
-    description: The collection of Server operations
-
-    post:
-      summary: Create a Server object
-      description: To create a server, a unique name should be provided. Any other properties will be ignored.
-      operationId: server_create
-      x-bhendi-operationId: server_create
-      x-bhendi-access: public
-      x-bhendi-stability: prototype
-      x-bhendi-cli: servers:create
-      x-bhendi-cli-stability: prototype
-      x-bhendi-authorized-orgs: both
-      x-bhendi-oauth-required: false
-      x-bhendi-permission-required: false
-      externalDocs:
-        description: Additional documentation
-        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#create'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Server'
-          application/yaml:
-            schema:
-              $ref: '#/components/schemas/Server'
-      responses:
-        '202':
-          description: Accepted
-
-        '400':
-          description: Invalid name supplied
-          $ref: '#/components/responses/Error'
-        '409':
-          description: Server already exists
-          $ref: '#/components/responses/Error'
-        5XX:
-          $ref: '#/components/responses/Error'
-      tags:
-        - 'Server'
-        - 'Resource: Server'
-
-    get:
-      summary: List the Server objects
-      description: List the Server objects
-      operationId: server_list
-      x-bhendi-operationId: server_list
-      x-bhendi-access: public
-      x-bhendi-stability: prototype
-      x-bhendi-cli: servers:list
-      x-bhendi-cli-stability: prototype
-      x-bhendi-authorized-orgs: both
-      x-bhendi-oauth-required: false
-      x-bhendi-permission-required: false
-      externalDocs:
-        description: Additional documentation
-        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#list'
-      parameters:
-        - $ref: '#/components/parameters/depth'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerList'
-            application/yaml:
-              schema:
-                $ref: '#/components/schemas/ServerList'
-        5XX:
-          $ref: '#/components/responses/Error'
-      tags:
-        - 'Server'
-        - 'Resource: Server'
-
-  #---------------------------------------------------------------------------
-  # Server Object
-  #---------------------------------------------------------------------------
-  '/servers/{server}':
-
     description: Server object operations
 
-    parameters:
-      - $ref: '#/components/parameters/server'
-
     get:
-      summary: Get the Server object by name or id
-      description: Get the Server object by name or id
-      operationId: server_get
-      x-bhendi-operationId: server_get
+      summary: Get the Server object
+      description: Get the Server object
+      operationId: server_singletonGet
+      x-bhendi-operationId: server_singletonGet
       x-bhendi-access: public
       x-bhendi-stability: prototype
       x-bhendi-cli: servers:get
@@ -339,44 +121,10 @@ paths:
         - 'Server'
         - 'Resource: Server'
 
-    delete:
-      summary: Delete the Server object by name or id
-      description: Delete the Server object by name or id
-      operationId: server_del
-      x-bhendi-operationId: server_del
-      x-bhendi-access: public
-      x-bhendi-stability: prototype
-      x-bhendi-cli: servers:delete
-      x-bhendi-cli-stability: prototype
-      x-bhendi-authorized-orgs: both
-      x-bhendi-oauth-required: false
-      x-bhendi-permission-required: false
-      externalDocs:
-        description: Additional documentation
-        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#del'
-      responses:
-        '200':
-          description: Successful delete
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Server'
-            application/yaml:
-              schema:
-                $ref: '#/components/schemas/Server'
-        5XX:
-          $ref: '#/components/responses/Error'
-      tags:
-        - 'Server'
-        - 'Resource: Server'
-
   #---------------------------------------------------------------------------
-  # Server Object - Delete Integrations
+  # Server Object (Singleton) - Delete Integrations
   #---------------------------------------------------------------------------
-  '/servers/{server}/delete':
-
-    parameters:
-      - $ref: '#/components/parameters/server'
+  '/delete':
 
     post:
       summary: Delete the named integrations
@@ -405,12 +153,9 @@ paths:
         - 'Resource: Server'
 
   #---------------------------------------------------------------------------
-  # Server Object - Delete All Integrations
+  # Server Object (Singleton) - Delete All Integrations
   #---------------------------------------------------------------------------
-  '/servers/{server}/delete-all':
-
-    parameters:
-      - $ref: '#/components/parameters/server'
+  '/delete-all':
 
     post:
       summary: Delete all integrations
@@ -437,12 +182,9 @@ paths:
         - 'Resource: Server'
 
   #---------------------------------------------------------------------------
-  # Server Object - Deploy Integrations
+  # Server Object (Singleton) - Deploy Integrations
   #---------------------------------------------------------------------------
-  '/servers/{server}/deploy':
-
-    parameters:
-      - $ref: '#/components/parameters/server'
+  '/deploy':
 
     post:
       summary: Deploy integrations
@@ -476,12 +218,9 @@ paths:
         - 'Resource: Server'
 
   #---------------------------------------------------------------------------
-  # Server Object - Reset Service Trace
+  # Server Object (Singleton) - Reset Service Trace
   #---------------------------------------------------------------------------
-  '/servers/{server}/reset-service-trace':
-
-    parameters:
-      - $ref: '#/components/parameters/server'
+  '/reset-service-trace':
 
     post:
       summary: Reset service trace
@@ -508,12 +247,9 @@ paths:
         - 'Resource: Server'
 
   #---------------------------------------------------------------------------
-  # Server Object - Reset User Trace
+  # Server Object (Singleton) - Reset User Trace
   #---------------------------------------------------------------------------
-  '/servers/{server}/reset-user-trace':
-
-    parameters:
-      - $ref: '#/components/parameters/server'
+  '/reset-user-trace':
 
     post:
       summary: Reset user trace
@@ -540,12 +276,9 @@ paths:
         - 'Resource: Server'
 
   #---------------------------------------------------------------------------
-  # Server Object - Setup
+  # Server Object (Singleton) - Setup
   #---------------------------------------------------------------------------
-  '/servers/{server}/setup':
-
-    parameters:
-      - $ref: '#/components/parameters/server'
+  '/setup':
 
     post:
       summary: Setup
@@ -572,12 +305,9 @@ paths:
         - 'Resource: Server'
 
   #---------------------------------------------------------------------------
-  # Server Object - Shutdown
+  # Server Object (Singleton) - Shutdown
   #---------------------------------------------------------------------------
-  '/servers/{server}/shutdown':
-
-    parameters:
-      - $ref: '#/components/parameters/server'
+  '/shutdown':
 
     post:
       summary: Shutdown
@@ -604,12 +334,9 @@ paths:
         - 'Resource: Server'
 
   #---------------------------------------------------------------------------
-  # Server Object - Start
+  # Server Object (Singleton) - Start
   #---------------------------------------------------------------------------
-  '/servers/{server}/start':
-
-    parameters:
-      - $ref: '#/components/parameters/server'
+  '/start':
 
     post:
       summary: Start
@@ -636,12 +363,9 @@ paths:
         - 'Resource: Server'
 
   #---------------------------------------------------------------------------
-  # Server Object - Start Service Trace
+  # Server Object (Singleton) - Start Service Trace
   #---------------------------------------------------------------------------
-  '/servers/{server}/start-service-trace':
-
-    parameters:
-      - $ref: '#/components/parameters/server'
+  '/start-service-trace':
 
     post:
       summary: Start service trace
@@ -668,12 +392,9 @@ paths:
         - 'Resource: Server'
 
   #---------------------------------------------------------------------------
-  # Server Object - Start User Trace
+  # Server Object (Singleton) - Start User Trace
   #---------------------------------------------------------------------------
-  '/servers/{server}/start-user-trace':
-
-    parameters:
-      - $ref: '#/components/parameters/server'
+  '/start-user-trace':
 
     post:
       summary: Start user trace
@@ -700,12 +421,9 @@ paths:
         - 'Resource: Server'
 
   #---------------------------------------------------------------------------
-  # Server Object - Stop
+  # Server Object (Singleton) - Stop
   #---------------------------------------------------------------------------
-  '/servers/{server}/stop':
-
-    parameters:
-      - $ref: '#/components/parameters/server'
+  '/stop':
 
     post:
       summary: Stop
@@ -732,12 +450,9 @@ paths:
         - 'Resource: Server'
 
   #---------------------------------------------------------------------------
-  # Server Object - Stop Service Trace
+  # Server Object (Singleton) - Stop Service Trace
   #---------------------------------------------------------------------------
-  '/servers/{server}/stop-service-trace':
-
-    parameters:
-      - $ref: '#/components/parameters/server'
+  '/stop-service-trace':
 
     post:
       summary: Stop service trace
@@ -764,12 +479,9 @@ paths:
         - 'Resource: Server'
 
   #---------------------------------------------------------------------------
-  # Server Object - Stop User Trace
+  # Server Object (Singleton) - Stop User Trace
   #---------------------------------------------------------------------------
-  '/servers/{server}/stop-user-trace':
-
-    parameters:
-      - $ref: '#/components/parameters/server'
+  '/stop-user-trace':
 
     post:
       summary: Stop user trace
@@ -796,12 +508,9 @@ paths:
         - 'Resource: Server'
 
   #---------------------------------------------------------------------------
-  # Server Object - Tear Down Integrations
+  # Server Object (Singleton) - Tear Down Integrations
   #---------------------------------------------------------------------------
-  '/servers/{server}/teardown':
-
-    parameters:
-      - $ref: '#/components/parameters/server'
+  '/teardown':
 
     post:
       summary: Tear down
@@ -828,12 +537,9 @@ paths:
         - 'Resource: Server'
 
   #---------------------------------------------------------------------------
-  # Server Object - Validate
+  # Server Object (Singleton) - Validate
   #---------------------------------------------------------------------------
-  '/servers/{server}/validate':
-
-    parameters:
-      - $ref: '#/components/parameters/server'
+  '/validate':
 
     post:
       summary: Validate this server
@@ -865,117 +571,11 @@ paths:
 
 
   #---------------------------------------------------------------------------
-  # Component Collection
-  #---------------------------------------------------------------------------
-  '/components':
-
-    description: The collection of Component operations
-
-    get:
-      summary: List the Component objects
-      description: List the Component objects
-      operationId: component_list
-      x-bhendi-operationId: component_list
-      x-bhendi-access: public
-      x-bhendi-stability: prototype
-      x-bhendi-cli: components:list
-      x-bhendi-cli-stability: prototype
-      x-bhendi-authorized-orgs: both
-      x-bhendi-oauth-required: false
-      x-bhendi-permission-required: false
-      externalDocs:
-        description: Additional documentation
-        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/component#list'
-      parameters:
-        - $ref: '#/components/parameters/depth'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ComponentList'
-            application/yaml:
-              schema:
-                $ref: '#/components/schemas/ComponentList'
-        5XX:
-          $ref: '#/components/responses/Error'
-      tags:
-        - 'Component'
-        - 'Resource: Component'
-
-  #---------------------------------------------------------------------------
-  # Component Object
-  #---------------------------------------------------------------------------
-  '/components/{component}':
-
-    description: Component object operations
-
-    parameters:
-      - $ref: '#/components/parameters/component'
-
-    get:
-      summary: Get the Component object by name or id
-      description: Get the Component object by name or id
-      operationId: component_get
-      x-bhendi-operationId: component_get
-      x-bhendi-access: public
-      x-bhendi-stability: prototype
-      x-bhendi-cli: components:get
-      x-bhendi-cli-stability: prototype
-      x-bhendi-authorized-orgs: both
-      x-bhendi-oauth-required: false
-      x-bhendi-permission-required: false
-      externalDocs:
-        description: Additional documentation
-        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/component#get'
-      parameters:
-        - $ref: '#/components/parameters/depth'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Component'
-            application/yaml:
-              schema:
-                $ref: '#/components/schemas/Component'
-        5XX:
-          $ref: '#/components/responses/Error'
-      tags:
-        - 'Component'
-        - 'Resource: Component'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  #---------------------------------------------------------------------------
   # Application Collection (Server Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications':
+  '/applications':
 
     description: The collection of Application operations
-
-    parameters:
-      - $ref: '#/components/parameters/server'
 
     get:
       summary: List the Application objects
@@ -1014,12 +614,11 @@ paths:
   #---------------------------------------------------------------------------
   # Application Object (Server Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications/{application}':
+  '/applications/{application}':
 
     description: Application object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/application'
 
     get:
@@ -1096,10 +695,9 @@ paths:
   #---------------------------------------------------------------------------
   # Application Object (Server Scope) - Setup
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications/{application}/setup':
+  '/applications/{application}/setup':
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/application'
 
     post:
@@ -1130,10 +728,9 @@ paths:
   #---------------------------------------------------------------------------
   # Application Object (Server Scope) - Start
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications/{application}/start':
+  '/applications/{application}/start':
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/application'
 
     post:
@@ -1165,10 +762,9 @@ paths:
   #---------------------------------------------------------------------------
   # Application Object (Server Scope) - Stop
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications/{application}/stop':
+  '/applications/{application}/stop':
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/application'
 
     post:
@@ -1200,10 +796,9 @@ paths:
   #---------------------------------------------------------------------------
   # Application Object (Server Scope) - Tear Down Integrations
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications/{application}/teardown':
+  '/applications/{application}/teardown':
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/application'
 
     post:
@@ -1233,10 +828,9 @@ paths:
   #---------------------------------------------------------------------------
   # Application Object (Server Scope) - Validate
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications/{application}/validate':
+  '/applications/{application}/validate':
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/application'
 
     post:
@@ -1271,12 +865,11 @@ paths:
   #---------------------------------------------------------------------------
   # Library Collection (Application Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications/{application}/libraries':
+  '/applications/{application}/libraries':
 
     description: The collection of Library operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/application'
 
     get:
@@ -1316,12 +909,11 @@ paths:
   #---------------------------------------------------------------------------
   # Library Object (Application Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications/{application}/libraries/{library}':
+  '/applications/{application}/libraries/{library}':
 
     description: Library object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/application'
       - $ref: '#/components/parameters/library'
 
@@ -1382,12 +974,11 @@ paths:
   #---------------------------------------------------------------------------
   # Library Collection (RestApi Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}/libraries':
+  '/rest-apis/{rest-api}/libraries':
 
     description: The collection of Library operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
 
     get:
@@ -1427,12 +1018,11 @@ paths:
   #---------------------------------------------------------------------------
   # Library Object (RestApi Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}/libraries/{library}':
+  '/rest-apis/{rest-api}/libraries/{library}':
 
     description: Library object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
       - $ref: '#/components/parameters/library'
 
@@ -1493,12 +1083,11 @@ paths:
   #---------------------------------------------------------------------------
   # Library Collection (Service Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/services/{service}/libraries':
+  '/services/{service}/libraries':
 
     description: The collection of Library operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/service'
 
     get:
@@ -1538,12 +1127,11 @@ paths:
   #---------------------------------------------------------------------------
   # Library Object (Service Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/services/{service}/libraries/{library}':
+  '/services/{service}/libraries/{library}':
 
     description: Library object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/service'
       - $ref: '#/components/parameters/library'
 
@@ -1604,12 +1192,11 @@ paths:
   #---------------------------------------------------------------------------
   # Messageflow Collection (Application Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications/{application}/messageflows':
+  '/applications/{application}/messageflows':
 
     description: The collection of Messageflow operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/application'
 
     get:
@@ -1647,12 +1234,11 @@ paths:
   #---------------------------------------------------------------------------
   # Messageflow Object (Application Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications/{application}/messageflows/{messageflow}':
+  '/applications/{application}/messageflows/{messageflow}':
 
     description: Messageflow object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/application'
       - $ref: '#/components/parameters/messageflow'
 
@@ -1711,12 +1297,11 @@ paths:
   #---------------------------------------------------------------------------
   # Messageflow Collection (RestApi Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}/messageflows':
+  '/rest-apis/{rest-api}/messageflows':
 
     description: The collection of Messageflow operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
 
     get:
@@ -1754,12 +1339,11 @@ paths:
   #---------------------------------------------------------------------------
   # Messageflow Object (RestApi Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}/messageflows/{messageflow}':
+  '/rest-apis/{rest-api}/messageflows/{messageflow}':
 
     description: Messageflow object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
       - $ref: '#/components/parameters/messageflow'
 
@@ -1818,12 +1402,11 @@ paths:
   #---------------------------------------------------------------------------
   # Messageflow Collection (Service Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/services/{service}/messageflows':
+  '/services/{service}/messageflows':
 
     description: The collection of Messageflow operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/service'
 
     get:
@@ -1861,12 +1444,11 @@ paths:
   #---------------------------------------------------------------------------
   # Messageflow Object (Service Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/services/{service}/messageflows/{messageflow}':
+  '/services/{service}/messageflows/{messageflow}':
 
     description: Messageflow object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/service'
       - $ref: '#/components/parameters/messageflow'
 
@@ -1925,12 +1507,11 @@ paths:
   #---------------------------------------------------------------------------
   # Policy Object (Server Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/policies/{policy-project}/{policy}':
+  '/policy-projects/{policy-project}/policies/{policy}':
 
     description: Policy object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/policy-project'
       - $ref: '#/components/parameters/policy'
 
@@ -1989,12 +1570,11 @@ paths:
   #---------------------------------------------------------------------------
   # Resource Collection (Application Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications/{application}/resources':
+  '/applications/{application}/resources':
 
     description: The collection of Resource operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/application'
 
     get:
@@ -2032,12 +1612,11 @@ paths:
   #---------------------------------------------------------------------------
   # Resource Object (Application Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications/{application}/resources/{resource}':
+  '/applications/{application}/resources/{resource}':
 
     description: Resource object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/application'
       - $ref: '#/components/parameters/resource'
 
@@ -2096,12 +1675,11 @@ paths:
   #---------------------------------------------------------------------------
   # Resource Collection (RestApi Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}/resources':
+  '/rest-apis/{rest-api}/resources':
 
     description: The collection of Resource operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
 
     get:
@@ -2139,12 +1717,11 @@ paths:
   #---------------------------------------------------------------------------
   # Resource Object (RestApi Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}/resources/{resource}':
+  '/rest-apis/{rest-api}/resources/{resource}':
 
     description: Resource object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
       - $ref: '#/components/parameters/resource'
 
@@ -2203,12 +1780,11 @@ paths:
   #---------------------------------------------------------------------------
   # Resource Collection (Service Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/services/{service}/resources':
+  '/services/{service}/resources':
 
     description: The collection of Resource operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/service'
 
     get:
@@ -2246,12 +1822,11 @@ paths:
   #---------------------------------------------------------------------------
   # Resource Object (Service Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/services/{service}/resources/{resource}':
+  '/services/{service}/resources/{resource}':
 
     description: Resource object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/service'
       - $ref: '#/components/parameters/resource'
 
@@ -2310,12 +1885,11 @@ paths:
   #---------------------------------------------------------------------------
   # Resource Collection (SharedLibrary Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/shared-libraries/{shared-library}/resources':
+  '/shared-libraries/{shared-library}/resources':
 
     description: The collection of Resource operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/shared-library'
 
     get:
@@ -2353,12 +1927,11 @@ paths:
   #---------------------------------------------------------------------------
   # Resource Object (SharedLibrary Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/shared-libraries/{shared-library}/resources/{resource}':
+  '/shared-libraries/{shared-library}/resources/{resource}':
 
     description: Resource object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/shared-library'
       - $ref: '#/components/parameters/resource'
 
@@ -2417,12 +1990,9 @@ paths:
   #---------------------------------------------------------------------------
   # Resource Manager Collection (Component Scope)
   #---------------------------------------------------------------------------
-  '/components/{component}/resource-managers':
+  '/resource-managers':
 
     description: The collection of Resource Manager operations
-
-    parameters:
-      - $ref: '#/components/parameters/component'
 
     get:
       summary: List the Resource Manager objects
@@ -2459,12 +2029,11 @@ paths:
   #---------------------------------------------------------------------------
   # Resource Manager Object (Component Scope)
   #---------------------------------------------------------------------------
-  '/components/{component}/resource-managers/{resource-manager}':
+  '/resource-managers/{resource-manager}':
 
     description: Resource Manager object operations
 
     parameters:
-      - $ref: '#/components/parameters/component'
       - $ref: '#/components/parameters/resource-manager'
 
     get:
@@ -2520,119 +2089,11 @@ paths:
 
 
   #---------------------------------------------------------------------------
-  # Resource Manager Collection (Server Scope)
-  #---------------------------------------------------------------------------
-  '/servers/{server}/resource-managers':
-
-    description: The collection of Resource Manager operations
-
-    parameters:
-      - $ref: '#/components/parameters/server'
-
-    get:
-      summary: List the Resource Manager objects
-      description: List the Resource Manager objects
-      operationId: resource_manager_listServerScope
-      x-bhendi-operationId: resource_manager_list
-      x-bhendi-access: public
-      x-bhendi-scope: server
-      x-bhendi-stability: prototype
-      x-bhendi-cli: resource-managers:list --scope server
-      x-bhendi-cli-stability: prototype
-      x-bhendi-authorized-orgs: both
-      x-bhendi-oauth-required: false
-      x-bhendi-permission-required: false
-      externalDocs:
-        description: Additional documentation
-        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/resource-manager-server-scope#list'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResourceManagerList'
-            application/yaml:
-              schema:
-                $ref: '#/components/schemas/ResourceManagerList'
-        5XX:
-          $ref: '#/components/responses/Error'
-      tags:
-        - 'Resource Manager'
-        - 'Resource: Resource Manager (Server Scope)'
-
-  #---------------------------------------------------------------------------
-  # Resource Manager Object (Server Scope)
-  #---------------------------------------------------------------------------
-  '/servers/{server}/resource-managers/{resource-manager}':
-
-    description: Resource Manager object operations
-
-    parameters:
-      - $ref: '#/components/parameters/server'
-      - $ref: '#/components/parameters/resource-manager'
-
-    get:
-      summary: Get the Resource Manager object by name or id
-      description: Get the Resource Manager object by name or id
-      operationId: resource_manager_getServerScope
-      x-bhendi-operationId: resource_manager_get
-      x-bhendi-access: public
-      x-bhendi-scope: server
-      x-bhendi-stability: prototype
-      x-bhendi-cli: resource-managers:get --scope server
-      x-bhendi-cli-stability: prototype
-      x-bhendi-authorized-orgs: both
-      x-bhendi-oauth-required: false
-      x-bhendi-permission-required: false
-      externalDocs:
-        description: Additional documentation
-        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/resource-manager-server-scope#get'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResourceManager'
-            application/yaml:
-              schema:
-                $ref: '#/components/schemas/ResourceManager'
-        5XX:
-          $ref: '#/components/responses/Error'
-      tags:
-        - 'Resource Manager'
-        - 'Resource: Resource Manager (Server Scope)'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  #---------------------------------------------------------------------------
   # Rest API Collection (Server Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis':
+  '/rest-apis':
 
     description: The collection of Rest API operations
-
-    parameters:
-      - $ref: '#/components/parameters/server'
 
     get:
       summary: List the Rest API objects
@@ -2671,12 +2132,11 @@ paths:
   #---------------------------------------------------------------------------
   # Rest API Object (Server Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}':
+  '/rest-apis/{rest-api}':
 
     description: Rest API object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
 
     get:
@@ -2753,10 +2213,9 @@ paths:
   #---------------------------------------------------------------------------
   # Rest API Object (Server Scope) - Setup
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}/setup':
+  '/rest-apis/{rest-api}/setup':
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
 
     post:
@@ -2787,10 +2246,9 @@ paths:
   #---------------------------------------------------------------------------
   # Rest API Object (Server Scope) - Start
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}/start':
+  '/rest-apis/{rest-api}/start':
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
 
     post:
@@ -2822,10 +2280,9 @@ paths:
   #---------------------------------------------------------------------------
   # Rest API Object (Server Scope) - Stop
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}/stop':
+  '/rest-apis/{rest-api}/stop':
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
 
     post:
@@ -2857,10 +2314,9 @@ paths:
   #---------------------------------------------------------------------------
   # Rest API Object (Server Scope) - Tear Down Integrations
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}/teardown':
+  '/rest-apis/{rest-api}/teardown':
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
 
     post:
@@ -2890,10 +2346,9 @@ paths:
   #---------------------------------------------------------------------------
   # Rest API Object (Server Scope) - Validate
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}/validate':
+  '/rest-apis/{rest-api}/validate':
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
 
     post:
@@ -2928,12 +2383,11 @@ paths:
   #---------------------------------------------------------------------------
   # Document Object (RestApi Scope) (Singleton)
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}/document':
+  '/rest-apis/{rest-api}/document':
 
     description: Document object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
 
     get:
@@ -2991,12 +2445,9 @@ paths:
   #---------------------------------------------------------------------------
   # Service Collection (Server Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/services':
+  '/services':
 
     description: The collection of Service operations
-
-    parameters:
-      - $ref: '#/components/parameters/server'
 
     get:
       summary: List the Service objects
@@ -3035,12 +2486,11 @@ paths:
   #---------------------------------------------------------------------------
   # Service Object (Server Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/services/{service}':
+  '/services/{service}':
 
     description: Service object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/service'
 
     get:
@@ -3117,10 +2567,9 @@ paths:
   #---------------------------------------------------------------------------
   # Service Object (Server Scope) - Setup
   #---------------------------------------------------------------------------
-  '/servers/{server}/services/{service}/setup':
+  '/services/{service}/setup':
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/service'
 
     post:
@@ -3151,10 +2600,9 @@ paths:
   #---------------------------------------------------------------------------
   # Service Object (Server Scope) - Start
   #---------------------------------------------------------------------------
-  '/servers/{server}/services/{service}/start':
+  '/services/{service}/start':
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/service'
 
     post:
@@ -3186,10 +2634,9 @@ paths:
   #---------------------------------------------------------------------------
   # Service Object (Server Scope) - Stop
   #---------------------------------------------------------------------------
-  '/servers/{server}/services/{service}/stop':
+  '/services/{service}/stop':
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/service'
 
     post:
@@ -3221,10 +2668,9 @@ paths:
   #---------------------------------------------------------------------------
   # Service Object (Server Scope) - Tear Down Integrations
   #---------------------------------------------------------------------------
-  '/servers/{server}/services/{service}/teardown':
+  '/services/{service}/teardown':
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/service'
 
     post:
@@ -3254,10 +2700,9 @@ paths:
   #---------------------------------------------------------------------------
   # Service Object (Server Scope) - Validate
   #---------------------------------------------------------------------------
-  '/servers/{server}/services/{service}/validate':
+  '/services/{service}/validate':
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/service'
 
     post:
@@ -3292,12 +2737,9 @@ paths:
   #---------------------------------------------------------------------------
   # Shared Library Collection (Server Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/shared-libraries':
+  '/shared-libraries':
 
     description: The collection of Shared Library operations
-
-    parameters:
-      - $ref: '#/components/parameters/server'
 
     get:
       summary: List the Shared Library objects
@@ -3336,12 +2778,11 @@ paths:
   #---------------------------------------------------------------------------
   # Shared Library Object (Server Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/shared-libraries/{shared-library}':
+  '/shared-libraries/{shared-library}':
 
     description: Shared Library object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/shared-library'
 
     get:
@@ -3433,12 +2874,11 @@ paths:
   #---------------------------------------------------------------------------
   # Subflow Collection (Application Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications/{application}/subflows':
+  '/applications/{application}/subflows':
 
     description: The collection of Subflow operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/application'
 
     get:
@@ -3476,12 +2916,11 @@ paths:
   #---------------------------------------------------------------------------
   # Subflow Object (Application Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications/{application}/subflows/{subflow}':
+  '/applications/{application}/subflows/{subflow}':
 
     description: Subflow object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/application'
       - $ref: '#/components/parameters/subflow'
 
@@ -3540,12 +2979,11 @@ paths:
   #---------------------------------------------------------------------------
   # Subflow Collection (RestApi Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}/subflows':
+  '/rest-apis/{rest-api}/subflows':
 
     description: The collection of Subflow operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
 
     get:
@@ -3583,12 +3021,11 @@ paths:
   #---------------------------------------------------------------------------
   # Subflow Object (RestApi Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}/subflows/{subflow}':
+  '/rest-apis/{rest-api}/subflows/{subflow}':
 
     description: Subflow object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
       - $ref: '#/components/parameters/subflow'
 
@@ -3647,12 +3084,11 @@ paths:
   #---------------------------------------------------------------------------
   # Subflow Collection (Service Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/services/{service}/subflows':
+  '/services/{service}/subflows':
 
     description: The collection of Subflow operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/service'
 
     get:
@@ -3690,12 +3126,11 @@ paths:
   #---------------------------------------------------------------------------
   # Subflow Object (Service Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/services/{service}/subflows/{subflow}':
+  '/services/{service}/subflows/{subflow}':
 
     description: Subflow object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/service'
       - $ref: '#/components/parameters/subflow'
 
@@ -3754,12 +3189,11 @@ paths:
   #---------------------------------------------------------------------------
   # Subflow Collection (SharedLibrary Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/shared-libraries/{shared-library}/subflows':
+  '/shared-libraries/{shared-library}/subflows':
 
     description: The collection of Subflow operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/shared-library'
 
     get:
@@ -3797,12 +3231,11 @@ paths:
   #---------------------------------------------------------------------------
   # Subflow Object (SharedLibrary Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/shared-libraries/{shared-library}/subflows/{subflow}':
+  '/shared-libraries/{shared-library}/subflows/{subflow}':
 
     description: Subflow object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/shared-library'
       - $ref: '#/components/parameters/subflow'
 
@@ -3861,12 +3294,11 @@ paths:
   #---------------------------------------------------------------------------
   # Subflow Collection (ApplicationLibrary Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications/{application}/libraries/{library}/subflows':
+  '/applications/{application}/libraries/{library}/subflows':
 
     description: The collection of Subflow operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/application'
       - $ref: '#/components/parameters/library'
 
@@ -3905,12 +3337,11 @@ paths:
   #---------------------------------------------------------------------------
   # Subflow Object (ApplicationLibrary Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/applications/{application}/libraries/{library}/subflows/{subflow}':
+  '/applications/{application}/libraries/{library}/subflows/{subflow}':
 
     description: Subflow object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/application'
       - $ref: '#/components/parameters/library'
       - $ref: '#/components/parameters/subflow'
@@ -3970,12 +3401,11 @@ paths:
   #---------------------------------------------------------------------------
   # Subflow Collection (RestApiLibrary Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}/libraries/{library}/subflows':
+  '/rest-apis/{rest-api}/libraries/{library}/subflows':
 
     description: The collection of Subflow operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
       - $ref: '#/components/parameters/library'
 
@@ -4014,12 +3444,11 @@ paths:
   #---------------------------------------------------------------------------
   # Subflow Object (RestApiLibrary Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/rest-apis/{rest-api}/libraries/{library}/subflows/{subflow}':
+  '/rest-apis/{rest-api}/libraries/{library}/subflows/{subflow}':
 
     description: Subflow object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/rest-api'
       - $ref: '#/components/parameters/library'
       - $ref: '#/components/parameters/subflow'
@@ -4079,12 +3508,11 @@ paths:
   #---------------------------------------------------------------------------
   # Subflow Collection (ServiceLibrary Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/services/{service}/libraries/{library}/subflows':
+  '/services/{service}/libraries/{library}/subflows':
 
     description: The collection of Subflow operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/service'
       - $ref: '#/components/parameters/library'
 
@@ -4123,12 +3551,11 @@ paths:
   #---------------------------------------------------------------------------
   # Subflow Object (ServiceLibrary Scope)
   #---------------------------------------------------------------------------
-  '/servers/{server}/services/{service}/libraries/{library}/subflows/{subflow}':
+  '/services/{service}/libraries/{library}/subflows/{subflow}':
 
     description: Subflow object operations
 
     parameters:
-      - $ref: '#/components/parameters/server'
       - $ref: '#/components/parameters/service'
       - $ref: '#/components/parameters/library'
       - $ref: '#/components/parameters/subflow'
@@ -4208,17 +3635,6 @@ components:
       name: application
       in: path
       description: Application name or id
-      required: true
-      schema:
-        type: string
-
-    #---------------------------------------------------------------------------
-    # component (Parameter for Component)
-    #---------------------------------------------------------------------------
-    component:
-      name: component
-      in: path
-      description: Component name or id
       required: true
       schema:
         type: string
@@ -4356,17 +3772,6 @@ components:
         type: string
 
     #---------------------------------------------------------------------------
-    # server (Parameter for Server)
-    #---------------------------------------------------------------------------
-    server:
-      name: server
-      in: path
-      description: Server name or id
-      required: true
-      schema:
-        type: string
-
-    #---------------------------------------------------------------------------
     # service (Parameter for Service)
     #---------------------------------------------------------------------------
     service:
@@ -4417,9 +3822,6 @@ components:
   # Schema Components
   #=============================================================================
   schemas:
-
-
-
 
 
 
@@ -4542,55 +3944,6 @@ components:
             type: string
 
     #---------------------------------------------------------------------------
-    # CreateServer 
-    #---------------------------------------------------------------------------
-    CreateServer:
-      example:
-        name: my-new-server
-      type: object
-      properties:
-        name:
-          type: string
-      required:
-        - name
-
-    #---------------------------------------------------------------------------
-    # ServerList 
-    #---------------------------------------------------------------------------
-    ServerList:
-      example:
-        name: servers
-        type: integrationServers
-        hasChildren: true
-        children:
-          - name: my-server
-            type: integrationServer
-      type: object
-      properties:
-        hasChildren:
-          type: boolean
-        name:
-          type: string
-        type:
-          type: string
-          enum:
-            - integrationServers
-        uri:
-          type: string
-        properties:
-          $ref: '#/components/schemas/PropertyMap'
-        descriptiveProperties:
-          $ref: '#/components/schemas/DescriptivePropertyMap'
-        active:
-          $ref: '#/components/schemas/ActiveMap'
-        actions:
-          $ref: '#/components/schemas/Actions'
-        children:
-          type: array
-          items:
-            $ref: '#/components/schemas/Server'
-
-    #---------------------------------------------------------------------------
     # Server 
     #---------------------------------------------------------------------------
     Server:
@@ -4648,112 +4001,6 @@ components:
               $ref: '#/components/schemas/PolicyProjectList'
       required:
         - name
-
-    #---------------------------------------------------------------------------
-    # Node 
-    #---------------------------------------------------------------------------
-    Node:
-      example:
-        name: my-node
-        type: integrationNode
-        descriptiveProperties:
-          version: 11.0.0.0
-        children:
-          servers:
-            name: servers
-            hasChildren: true
-            children:
-              - name: my-server
-      type: object
-      properties:
-        hasChildren:
-          type: boolean
-        name:
-          type: string
-        type:
-          type: string
-          enum:
-            - integrationNode
-        uri:
-          type: string
-        properties:
-          $ref: '#/components/schemas/PropertyMap'
-        descriptiveProperties:
-          $ref: '#/components/schemas/DescriptivePropertyMap'
-        active:
-          $ref: '#/components/schemas/ActiveMap'
-        actions:
-          $ref: '#/components/schemas/Actions'
-        children:
-          type: object
-          properties:
-            servers:
-              $ref: '#/components/schemas/ServerList'
-            components:
-              $ref: '#/components/schemas/ComponentList'
-            policies:
-              $ref: '#/components/schemas/PolicyList'
-
-    #---------------------------------------------------------------------------
-    # ComponentList 
-    #---------------------------------------------------------------------------
-    ComponentList:
-      example:
-        name: components
-        type: components
-        hasChildren: true
-        children:
-          - name: httplistener
-            type: component
-      type: object
-      properties:
-        hasChildren:
-          type: boolean
-        name:
-          type: string
-        type:
-          type: string
-          enum:
-            - components
-        uri:
-          type: string
-        children:
-          type: array
-          items:
-            $ref: '#/components/schemas/Component'
-
-    #---------------------------------------------------------------------------
-    # Component 
-    #---------------------------------------------------------------------------
-    Component:
-      example:
-        name: httplistener
-        hasChildren: false
-      type: object
-      properties:
-        hasChildren:
-          type: boolean
-        name:
-          type: string
-          enum:
-            - pubsub
-            - httplistener
-            - securitycache
-            - cachemanager
-            - webadmin
-            - crlFile
-            - agent
-        type:
-          type: string
-          enum:
-            - component
-        uri:
-          type: string
-        children:
-          type: object
-          properties:
-            resourceManagers:
-              $ref: '#/components/schemas/ResourceManagerList'
 
     #---------------------------------------------------------------------------
     # ApplicationList 
@@ -5625,7 +4872,7 @@ components:
         type:
           type: string
           enum:
-            - integrationNode
+            - integrationServer
         name:
           type: string
         security:

@@ -1,1 +1,5734 @@
+openapi: '3.0.0'
+
+info:
+  x-ibm-name: appconnect-enterprise
+  x-bhendi-keyspace: appconnect-enterprise
+  version: 2.0.0
+  title: App Connect Enterprise APIs
+  description: APIs for administering App Connect Enterprise integration nodes
+
+servers:
+  - url: /apiv2
+    description: App Connect Enterprise API v2
+
+x-bhendi-resources:
+
+  application:
+    type: normal
+    cassandra: false
+    schema:
+      $ref: '#/components/schemas/Application'
+
+  component:
+    type: normal
+    cassandra: false
+    schema:
+      $ref: '#/components/schemas/Component'
+
+  document:
+    type: singleton
+    cassandra: false
+    schema:
+      $ref: '#/components/schemas/Document'
+
+  library:
+    type: normal
+    cassandra: false
+    schema:
+      $ref: '#/components/schemas/Library'
+
+  messageflow:
+    type: normal
+    cassandra: false
+    schema:
+      $ref: '#/components/schemas/Messageflow'
+
+  node:
+    type: singleton
+    cassandra: false
+    schema:
+      $ref: '#/components/schemas/Node'
+
+  resource:
+    type: normal
+    cassandra: false
+    schema:
+      $ref: '#/components/schemas/Resource'
+
+  resource_manager:
+    type: normal
+    cassandra: false
+    schema:
+      $ref: '#/components/schemas/ResourceManager'
+
+  rest_api:
+    type: normal
+    cassandra: false
+    schema:
+      $ref: '#/components/schemas/RestAPI'
+
+  server:
+    type: normal
+    cassandra: false
+    schema:
+      $ref: '#/components/schemas/Server'
+
+  service:
+    type: normal
+    cassandra: false
+    schema:
+      $ref: '#/components/schemas/Service'
+
+  shared_library:
+    type: normal
+    cassandra: false
+    schema:
+      $ref: '#/components/schemas/SharedLibrary'
+
+  subflow:
+    type: normal
+    cassandra: false
+    schema:
+      $ref: '#/components/schemas/Subflow'
+
+  system:
+    type: singleton
+    cassandra: false
+    schema:
+      $ref: '#/components/schemas/System'
+
+paths:
+
+  #---------------------------------------------------------------------------
+  # Node Object (Singleton)
+  #---------------------------------------------------------------------------
+  '/':
+
+    description: Node object operations
+
+    get:
+      summary: Get the Node object
+      description: Get the Node object
+      operationId: node_singletonGet
+      x-bhendi-operationId: node_singletonGet
+      x-bhendi-access: public
+      x-bhendi-stability: prototype
+      x-bhendi-cli: nodes:get
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/node#get'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Node'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Node'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Node'
+        - 'Resource: Node'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # System Object (Singleton)
+  #---------------------------------------------------------------------------
+  '/system':
+
+    description: System object operations
+
+    get:
+      summary: Get the System object
+      description: Get the System object
+      operationId: system_singletonGet
+      x-bhendi-operationId: system_singletonGet
+      x-bhendi-access: public
+      x-bhendi-stability: prototype
+      x-bhendi-cli: systems:get
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/system#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/System'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'System'
+        - 'Resource: System'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Server Collection
+  #---------------------------------------------------------------------------
+  '/servers':
+
+    description: The collection of Server operations
+
+    post:
+      summary: Create a Server object
+      description: To create a server, a unique name should be provided. Any other properties will be ignored.
+      operationId: server_create
+      x-bhendi-operationId: server_create
+      x-bhendi-access: public
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:create
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#create'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Server'
+          application/yaml:
+            schema:
+              $ref: '#/components/schemas/Server'
+      responses:
+        '201':
+          description: Successful create
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Server'
+          headers:
+            Location:
+              $ref: '#/components/headers/Location'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+    get:
+      summary: List the Server objects
+      description: List the Server objects
+      operationId: server_list
+      x-bhendi-operationId: server_list
+      x-bhendi-access: public
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:list
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#list'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/ServerList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+  #---------------------------------------------------------------------------
+  # Server Object
+  #---------------------------------------------------------------------------
+  '/servers/{server}':
+
+    description: Server object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    get:
+      summary: Get the Server object by name or id
+      description: Get the Server object by name or id
+      operationId: server_get
+      x-bhendi-operationId: server_get
+      x-bhendi-access: public
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:get
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#get'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Server'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+    delete:
+      summary: Delete the Server object by name or id
+      description: Delete the Server object by name or id
+      operationId: server_del
+      x-bhendi-operationId: server_del
+      x-bhendi-access: public
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:delete
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#del'
+      responses:
+        '200':
+          description: Successful delete
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Server'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+  #---------------------------------------------------------------------------
+  # Server Object - Delete Integrations
+  #---------------------------------------------------------------------------
+  '/servers/{server}/delete':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    post:
+      summary: Delete the named integrations
+      description: Delete the named integrations on this server
+      operationId: server_delete
+      x-bhendi-operationId: server_delete
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:delete
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#delete'
+      parameters:
+        - $ref: '#/components/parameters/names'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+  #---------------------------------------------------------------------------
+  # Server Object - Delete All Integrations
+  #---------------------------------------------------------------------------
+  '/servers/{server}/delete-all':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    post:
+      summary: Delete all integrations
+      description: Delete all integrations on this server
+      operationId: server_delete_all
+      x-bhendi-operationId: server_delete_all
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:delete-all
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#delete-all'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+  #---------------------------------------------------------------------------
+  # Server Object - Deploy Integrations
+  #---------------------------------------------------------------------------
+  '/servers/{server}/deploy':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    post:
+      summary: Deploy integrations
+      description: Deploy integrations onto this server
+      operationId: server_deploy
+      x-bhendi-operationId: server_deploy
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:deploy
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#deploy'
+      parameters:
+        - $ref: '#/components/parameters/delete-all'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DeployMultipart'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+  #---------------------------------------------------------------------------
+  # Server Object - Reset Service Trace
+  #---------------------------------------------------------------------------
+  '/servers/{server}/reset-service-trace':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    post:
+      summary: Reset service trace
+      description: Reset service trace on this server
+      operationId: server_reset_service_trace
+      x-bhendi-operationId: server_reset_service_trace
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:reset-service-trace
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#reset-service-trace'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+  #---------------------------------------------------------------------------
+  # Server Object - Reset User Trace
+  #---------------------------------------------------------------------------
+  '/servers/{server}/reset-user-trace':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    post:
+      summary: Reset user trace
+      description: Reset user trace on this server
+      operationId: server_reset_user_trace
+      x-bhendi-operationId: server_reset_user_trace
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:reset-user-trace
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#reset-user-trace'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+  #---------------------------------------------------------------------------
+  # Server Object - Setup
+  #---------------------------------------------------------------------------
+  '/servers/{server}/setup':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    post:
+      summary: Setup
+      description: Setup this server
+      operationId: server_setup
+      x-bhendi-operationId: server_setup
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:setup
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#setup'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+  #---------------------------------------------------------------------------
+  # Server Object - Shutdown
+  #---------------------------------------------------------------------------
+  '/servers/{server}/shutdown':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    post:
+      summary: Shutdown
+      description: Shutdown this server
+      operationId: server_shutdown
+      x-bhendi-operationId: server_shutdown
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:shutdown
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#shutdown'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+  #---------------------------------------------------------------------------
+  # Server Object - Start
+  #---------------------------------------------------------------------------
+  '/servers/{server}/start':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    post:
+      summary: Start
+      description: Start this server
+      operationId: server_start
+      x-bhendi-operationId: server_start
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:start
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#start'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+  #---------------------------------------------------------------------------
+  # Server Object - Start Service Trace
+  #---------------------------------------------------------------------------
+  '/servers/{server}/start-service-trace':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    post:
+      summary: Start service trace
+      description: Start service trace on this server
+      operationId: server_start_service_trace
+      x-bhendi-operationId: server_start_service_trace
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:start-service-trace
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#start-service-trace'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+  #---------------------------------------------------------------------------
+  # Server Object - Start User Trace
+  #---------------------------------------------------------------------------
+  '/servers/{server}/start-user-trace':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    post:
+      summary: Start user trace
+      description: Start user trace on this server
+      operationId: server_start_user_trace
+      x-bhendi-operationId: server_start_user_trace
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:start-user-trace
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#start-user-trace'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+  #---------------------------------------------------------------------------
+  # Server Object - Stop
+  #---------------------------------------------------------------------------
+  '/servers/{server}/stop':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    post:
+      summary: Stop
+      description: Stop this server
+      operationId: server_stop
+      x-bhendi-operationId: server_stop
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:stop
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#stop'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+  #---------------------------------------------------------------------------
+  # Server Object - Stop Service Trace
+  #---------------------------------------------------------------------------
+  '/servers/{server}/stop-service-trace':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    post:
+      summary: Stop service trace
+      description: Stop service trace on this server
+      operationId: server_stop_service_trace
+      x-bhendi-operationId: server_stop_service_trace
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:stop-service-trace
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#stop-service-trace'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+  #---------------------------------------------------------------------------
+  # Server Object - Stop User Trace
+  #---------------------------------------------------------------------------
+  '/servers/{server}/stop-user-trace':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    post:
+      summary: Stop user trace
+      description: Stop user trace on this server
+      operationId: server_stop_user_trace
+      x-bhendi-operationId: server_stop_user_trace
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:stop-user-trace
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#stop-user-trace'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+  #---------------------------------------------------------------------------
+  # Server Object - Tear Down Integrations
+  #---------------------------------------------------------------------------
+  '/servers/{server}/teardown':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    post:
+      summary: Tear down
+      description: Tear down this server
+      operationId: server_teardown
+      x-bhendi-operationId: server_teardown
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:teardown
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#teardown'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+  #---------------------------------------------------------------------------
+  # Server Object - Validate
+  #---------------------------------------------------------------------------
+  '/servers/{server}/validate':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    post:
+      summary: Validate this server
+      description: Validate this server
+      operationId: server_validate
+      x-bhendi-operationId: server_validate
+      x-bhendi-stability: prototype
+      x-bhendi-cli: servers:validate
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/server#validate'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Server'
+        - 'Resource: Server'
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Component Collection
+  #---------------------------------------------------------------------------
+  '/components':
+
+    description: The collection of Component operations
+
+    get:
+      summary: List the Component objects
+      description: List the Component objects
+      operationId: component_list
+      x-bhendi-operationId: component_list
+      x-bhendi-access: public
+      x-bhendi-stability: prototype
+      x-bhendi-cli: components:list
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/component#list'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/ComponentList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Component'
+        - 'Resource: Component'
+
+  #---------------------------------------------------------------------------
+  # Component Object
+  #---------------------------------------------------------------------------
+  '/components/{component}':
+
+    description: Component object operations
+
+    parameters:
+      - $ref: '#/components/parameters/component'
+
+    get:
+      summary: Get the Component object by name or id
+      description: Get the Component object by name or id
+      operationId: component_get
+      x-bhendi-operationId: component_get
+      x-bhendi-access: public
+      x-bhendi-stability: prototype
+      x-bhendi-cli: components:get
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/component#get'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Component'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Component'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Component'
+        - 'Resource: Component'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Application Collection (Server Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications':
+
+    description: The collection of Application operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    get:
+      summary: List the Application objects
+      description: List the Application objects
+      operationId: application_listServerScope
+      x-bhendi-operationId: application_list
+      x-bhendi-access: public
+      x-bhendi-scope: server
+      x-bhendi-stability: prototype
+      x-bhendi-cli: applications:list --scope server
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/application-server-scope#list'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/ApplicationList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Application'
+        - 'Resource: Application (Server Scope)'
+
+  #---------------------------------------------------------------------------
+  # Application Object (Server Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications/{application}':
+
+    description: Application object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/application'
+
+    get:
+      summary: Get the Application object by name or id
+      description: Get the Application object by name or id
+      operationId: application_getServerScope
+      x-bhendi-operationId: application_get
+      x-bhendi-access: public
+      x-bhendi-scope: server
+      x-bhendi-stability: prototype
+      x-bhendi-cli: applications:get --scope server
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/application-server-scope#get'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Application'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Application'
+        - 'Resource: Application (Server Scope)'
+
+    delete:
+      summary: Delete the Application object by name or id
+      description: Delete the Application object by name or id
+      operationId: application_delServerScope
+      x-bhendi-operationId: application_del
+      x-bhendi-access: public
+      x-bhendi-scope: server
+      x-bhendi-stability: prototype
+      x-bhendi-cli: applications:delete --scope server
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/application-server-scope#del'
+      responses:
+        '200':
+          description: Successful delete
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Application'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Application'
+        - 'Resource: Application (Server Scope)'
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Application Object (Server Scope) - Setup
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications/{application}/setup':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/application'
+
+    post:
+      summary: Setup
+      description: Setup this application
+      operationId: application_setup
+      x-bhendi-operationId: application_setup
+      x-bhendi-stability: prototype
+      x-bhendi-cli: applications:setup
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/application-server-scope#setup'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Application'
+        - 'Resource: Application (Server Scope)'
+
+
+  #---------------------------------------------------------------------------
+  # Application Object (Server Scope) - Start
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications/{application}/start':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/application'
+
+    post:
+      summary: Start
+      description: Start this application
+      operationId: application_start
+      x-bhendi-operationId: application_start
+      x-bhendi-stability: prototype
+      x-bhendi-cli: applications:start
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/application-server-scope#start'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Application'
+        - 'Resource: Application (Server Scope)'
+
+
+
+  #---------------------------------------------------------------------------
+  # Application Object (Server Scope) - Stop
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications/{application}/stop':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/application'
+
+    post:
+      summary: Stop
+      description: Stop this application
+      operationId: application_stop
+      x-bhendi-operationId: application_stop
+      x-bhendi-stability: prototype
+      x-bhendi-cli: applications:stop
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/application-server-scope#stop'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Application'
+        - 'Resource: Application (Server Scope)'
+
+
+
+  #---------------------------------------------------------------------------
+  # Application Object (Server Scope) - Tear Down Integrations
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications/{application}/teardown':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/application'
+
+    post:
+      summary: Tear down
+      description: Tear down this application
+      operationId: application_teardown
+      x-bhendi-operationId: application_teardown
+      x-bhendi-stability: prototype
+      x-bhendi-cli: applications:teardown
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/application-server-scope#teardown'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Application'
+        - 'Resource: Application (Server Scope)'
+
+  #---------------------------------------------------------------------------
+  # Application Object (Server Scope) - Validate
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications/{application}/validate':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/application'
+
+    post:
+      summary: Validate this application
+      description: Validate this application
+      operationId: application_validate
+      x-bhendi-operationId: application_validate
+      x-bhendi-stability: prototype
+      x-bhendi-cli: applications:validate
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/application-server-scope#validate'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Application'
+        - 'Resource: Application (Server Scope)'
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Library Collection (Application Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications/{application}/libraries':
+
+    description: The collection of Library operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/application'
+
+    get:
+      summary: List the Library objects
+      description: List the Library objects
+      operationId: library_listApplicationScope
+      x-bhendi-operationId: library_list
+      x-bhendi-access: public
+      x-bhendi-scope: application
+      x-bhendi-stability: prototype
+      x-bhendi-cli: libraries:list --scope application
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/library-application-scope#list'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LibraryList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/LibraryList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Library'
+        - 'Resource: Library (Application Scope)'
+
+  #---------------------------------------------------------------------------
+  # Library Object (Application Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications/{application}/libraries/{library}':
+
+    description: Library object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/application'
+      - $ref: '#/components/parameters/library'
+
+    get:
+      summary: Get the Library object by name or id
+      description: Get the Library object by name or id
+      operationId: library_getApplicationScope
+      x-bhendi-operationId: library_get
+      x-bhendi-access: public
+      x-bhendi-scope: application
+      x-bhendi-stability: prototype
+      x-bhendi-cli: libraries:get --scope application
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/library-application-scope#get'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Library'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Library'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Library'
+        - 'Resource: Library (Application Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Library Collection (RestApi Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}/libraries':
+
+    description: The collection of Library operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+
+    get:
+      summary: List the Library objects
+      description: List the Library objects
+      operationId: library_listRestApiScope
+      x-bhendi-operationId: library_list
+      x-bhendi-access: public
+      x-bhendi-scope: rest-api
+      x-bhendi-stability: prototype
+      x-bhendi-cli: libraries:list --scope rest-api
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/library-rest-api-scope#list'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LibraryList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/LibraryList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Library'
+        - 'Resource: Library (RestApi Scope)'
+
+  #---------------------------------------------------------------------------
+  # Library Object (RestApi Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}/libraries/{library}':
+
+    description: Library object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+      - $ref: '#/components/parameters/library'
+
+    get:
+      summary: Get the Library object by name or id
+      description: Get the Library object by name or id
+      operationId: library_getRestApiScope
+      x-bhendi-operationId: library_get
+      x-bhendi-access: public
+      x-bhendi-scope: rest-api
+      x-bhendi-stability: prototype
+      x-bhendi-cli: libraries:get --scope rest-api
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/library-rest-api-scope#get'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Library'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Library'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Library'
+        - 'Resource: Library (RestApi Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Library Collection (Service Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services/{service}/libraries':
+
+    description: The collection of Library operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/service'
+
+    get:
+      summary: List the Library objects
+      description: List the Library objects
+      operationId: library_listServiceScope
+      x-bhendi-operationId: library_list
+      x-bhendi-access: public
+      x-bhendi-scope: service
+      x-bhendi-stability: prototype
+      x-bhendi-cli: libraries:list --scope service
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/library-service-scope#list'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LibraryList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/LibraryList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Library'
+        - 'Resource: Library (Service Scope)'
+
+  #---------------------------------------------------------------------------
+  # Library Object (Service Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services/{service}/libraries/{library}':
+
+    description: Library object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/service'
+      - $ref: '#/components/parameters/library'
+
+    get:
+      summary: Get the Library object by name or id
+      description: Get the Library object by name or id
+      operationId: library_getServiceScope
+      x-bhendi-operationId: library_get
+      x-bhendi-access: public
+      x-bhendi-scope: service
+      x-bhendi-stability: prototype
+      x-bhendi-cli: libraries:get --scope service
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/library-service-scope#get'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Library'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Library'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Library'
+        - 'Resource: Library (Service Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Messageflow Collection (Application Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications/{application}/messageflows':
+
+    description: The collection of Messageflow operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/application'
+
+    get:
+      summary: List the Messageflow objects
+      description: List the Messageflow objects
+      operationId: messageflow_listApplicationScope
+      x-bhendi-operationId: messageflow_list
+      x-bhendi-access: public
+      x-bhendi-scope: application
+      x-bhendi-stability: prototype
+      x-bhendi-cli: messageflows:list --scope application
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/messageflow-application-scope#list'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageflowList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/MessageflowList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Message Flow'
+        - 'Resource: Messageflow (Application Scope)'
+
+  #---------------------------------------------------------------------------
+  # Messageflow Object (Application Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications/{application}/messageflows/{messageflow}':
+
+    description: Messageflow object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/application'
+      - $ref: '#/components/parameters/messageflow'
+
+    get:
+      summary: Get the Messageflow object by name or id
+      description: Get the Messageflow object by name or id
+      operationId: messageflow_getApplicationScope
+      x-bhendi-operationId: messageflow_get
+      x-bhendi-access: public
+      x-bhendi-scope: application
+      x-bhendi-stability: prototype
+      x-bhendi-cli: messageflows:get --scope application
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/messageflow-application-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Messageflow'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Messageflow'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Message Flow'
+        - 'Resource: Messageflow (Application Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Messageflow Collection (RestApi Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}/messageflows':
+
+    description: The collection of Messageflow operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+
+    get:
+      summary: List the Messageflow objects
+      description: List the Messageflow objects
+      operationId: messageflow_listRestApiScope
+      x-bhendi-operationId: messageflow_list
+      x-bhendi-access: public
+      x-bhendi-scope: rest-api
+      x-bhendi-stability: prototype
+      x-bhendi-cli: messageflows:list --scope rest-api
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/messageflow-rest-api-scope#list'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageflowList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/MessageflowList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Message Flow'
+        - 'Resource: Messageflow (RestApi Scope)'
+
+  #---------------------------------------------------------------------------
+  # Messageflow Object (RestApi Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}/messageflows/{messageflow}':
+
+    description: Messageflow object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+      - $ref: '#/components/parameters/messageflow'
+
+    get:
+      summary: Get the Messageflow object by name or id
+      description: Get the Messageflow object by name or id
+      operationId: messageflow_getRestApiScope
+      x-bhendi-operationId: messageflow_get
+      x-bhendi-access: public
+      x-bhendi-scope: rest-api
+      x-bhendi-stability: prototype
+      x-bhendi-cli: messageflows:get --scope rest-api
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/messageflow-rest-api-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Messageflow'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Messageflow'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Message Flow'
+        - 'Resource: Messageflow (RestApi Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Messageflow Collection (Service Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services/{service}/messageflows':
+
+    description: The collection of Messageflow operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/service'
+
+    get:
+      summary: List the Messageflow objects
+      description: List the Messageflow objects
+      operationId: messageflow_listServiceScope
+      x-bhendi-operationId: messageflow_list
+      x-bhendi-access: public
+      x-bhendi-scope: service
+      x-bhendi-stability: prototype
+      x-bhendi-cli: messageflows:list --scope service
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/messageflow-service-scope#list'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageflowList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/MessageflowList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Message Flow'
+        - 'Resource: Messageflow (Service Scope)'
+
+  #---------------------------------------------------------------------------
+  # Messageflow Object (Service Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services/{service}/messageflows/{messageflow}':
+
+    description: Messageflow object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/service'
+      - $ref: '#/components/parameters/messageflow'
+
+    get:
+      summary: Get the Messageflow object by name or id
+      description: Get the Messageflow object by name or id
+      operationId: messageflow_getServiceScope
+      x-bhendi-operationId: messageflow_get
+      x-bhendi-access: public
+      x-bhendi-scope: service
+      x-bhendi-stability: prototype
+      x-bhendi-cli: messageflows:get --scope service
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/messageflow-service-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Messageflow'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Messageflow'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Message Flow'
+        - 'Resource: Messageflow (Service Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Policy Object (Server Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/policies/{policy-project}/{policy}':
+
+    description: Policy object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/policy-project'
+      - $ref: '#/components/parameters/policy'
+
+    get:
+      summary: Get the Policy object by name or id
+      description: Get the Policy object by name or id
+      operationId: policy_getServerScope
+      x-bhendi-operationId: policy_get
+      x-bhendi-access: public
+      x-bhendi-scope: server
+      x-bhendi-stability: prototype
+      x-bhendi-cli: policies:get --scope server
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/policy-server-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Policy'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Policy'
+        - 'Resource: Policy (Server Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Resource Collection (Application Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications/{application}/resources':
+
+    description: The collection of Resource operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/application'
+
+    get:
+      summary: List the Resource objects
+      description: List the Resource objects
+      operationId: resource_listApplicationScope
+      x-bhendi-operationId: resource_list
+      x-bhendi-access: public
+      x-bhendi-scope: application
+      x-bhendi-stability: prototype
+      x-bhendi-cli: resources:list --scope application
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/resource-application-scope#list'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/ResourceList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Resource'
+        - 'Resource: Resource (Application Scope)'
+
+  #---------------------------------------------------------------------------
+  # Resource Object (Application Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications/{application}/resources/{resource}':
+
+    description: Resource object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/application'
+      - $ref: '#/components/parameters/resource'
+
+    get:
+      summary: Get the Resource object by name or id
+      description: Get the Resource object by name or id
+      operationId: resource_getApplicationScope
+      x-bhendi-operationId: resource_get
+      x-bhendi-access: public
+      x-bhendi-scope: application
+      x-bhendi-stability: prototype
+      x-bhendi-cli: resources:get --scope application
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/resource-application-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Resource'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Resource'
+        - 'Resource: Resource (Application Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Resource Collection (RestApi Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}/resources':
+
+    description: The collection of Resource operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+
+    get:
+      summary: List the Resource objects
+      description: List the Resource objects
+      operationId: resource_listRestApiScope
+      x-bhendi-operationId: resource_list
+      x-bhendi-access: public
+      x-bhendi-scope: rest-api
+      x-bhendi-stability: prototype
+      x-bhendi-cli: resources:list --scope rest-api
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/resource-rest-api-scope#list'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/ResourceList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Resource'
+        - 'Resource: Resource (RestApi Scope)'
+
+  #---------------------------------------------------------------------------
+  # Resource Object (RestApi Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}/resources/{resource}':
+
+    description: Resource object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+      - $ref: '#/components/parameters/resource'
+
+    get:
+      summary: Get the Resource object by name or id
+      description: Get the Resource object by name or id
+      operationId: resource_getRestApiScope
+      x-bhendi-operationId: resource_get
+      x-bhendi-access: public
+      x-bhendi-scope: rest-api
+      x-bhendi-stability: prototype
+      x-bhendi-cli: resources:get --scope rest-api
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/resource-rest-api-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Resource'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Resource'
+        - 'Resource: Resource (RestApi Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Resource Collection (Service Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services/{service}/resources':
+
+    description: The collection of Resource operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/service'
+
+    get:
+      summary: List the Resource objects
+      description: List the Resource objects
+      operationId: resource_listServiceScope
+      x-bhendi-operationId: resource_list
+      x-bhendi-access: public
+      x-bhendi-scope: service
+      x-bhendi-stability: prototype
+      x-bhendi-cli: resources:list --scope service
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/resource-service-scope#list'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/ResourceList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Resource'
+        - 'Resource: Resource (Service Scope)'
+
+  #---------------------------------------------------------------------------
+  # Resource Object (Service Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services/{service}/resources/{resource}':
+
+    description: Resource object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/service'
+      - $ref: '#/components/parameters/resource'
+
+    get:
+      summary: Get the Resource object by name or id
+      description: Get the Resource object by name or id
+      operationId: resource_getServiceScope
+      x-bhendi-operationId: resource_get
+      x-bhendi-access: public
+      x-bhendi-scope: service
+      x-bhendi-stability: prototype
+      x-bhendi-cli: resources:get --scope service
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/resource-service-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Resource'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Resource'
+        - 'Resource: Resource (Service Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Resource Collection (SharedLibrary Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/shared-libraries/{shared-library}/resources':
+
+    description: The collection of Resource operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/shared-library'
+
+    get:
+      summary: List the Resource objects
+      description: List the Resource objects
+      operationId: resource_listSharedLibraryScope
+      x-bhendi-operationId: resource_list
+      x-bhendi-access: public
+      x-bhendi-scope: shared-library
+      x-bhendi-stability: prototype
+      x-bhendi-cli: resources:list --scope shared-library
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/resource-shared-library-scope#list'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/ResourceList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Resource'
+        - 'Resource: Resource (SharedLibrary Scope)'
+
+  #---------------------------------------------------------------------------
+  # Resource Object (SharedLibrary Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/shared-libraries/{shared-library}/resources/{resource}':
+
+    description: Resource object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/shared-library'
+      - $ref: '#/components/parameters/resource'
+
+    get:
+      summary: Get the Resource object by name or id
+      description: Get the Resource object by name or id
+      operationId: resource_getSharedLibraryScope
+      x-bhendi-operationId: resource_get
+      x-bhendi-access: public
+      x-bhendi-scope: shared-library
+      x-bhendi-stability: prototype
+      x-bhendi-cli: resources:get --scope shared-library
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/resource-shared-library-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Resource'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Resource'
+        - 'Resource: Resource (SharedLibrary Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Resource Manager Collection (Component Scope)
+  #---------------------------------------------------------------------------
+  '/components/{component}/resource-managers':
+
+    description: The collection of Resource Manager operations
+
+    parameters:
+      - $ref: '#/components/parameters/component'
+
+    get:
+      summary: List the Resource Manager objects
+      description: List the Resource Manager objects
+      operationId: resource_manager_listComponentScope
+      x-bhendi-operationId: resource_manager_list
+      x-bhendi-access: public
+      x-bhendi-scope: component
+      x-bhendi-stability: prototype
+      x-bhendi-cli: resource-managers:list --scope component
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/resource-manager-component-scope#list'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceManagerList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/ResourceManagerList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Resource Manager'
+        - 'Resource: Resource Manager (Component Scope)'
+
+  #---------------------------------------------------------------------------
+  # Resource Manager Object (Component Scope)
+  #---------------------------------------------------------------------------
+  '/components/{component}/resource-managers/{resource-manager}':
+
+    description: Resource Manager object operations
+
+    parameters:
+      - $ref: '#/components/parameters/component'
+      - $ref: '#/components/parameters/resource-manager'
+
+    get:
+      summary: Get the Resource Manager object by name or id
+      description: Get the Resource Manager object by name or id
+      operationId: resource_manager_getComponentScope
+      x-bhendi-operationId: resource_manager_get
+      x-bhendi-access: public
+      x-bhendi-scope: component
+      x-bhendi-stability: prototype
+      x-bhendi-cli: resource-managers:get --scope component
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/resource-manager-component-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceManager'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/ResourceManager'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Resource Manager'
+        - 'Resource: Resource Manager (Component Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Resource Manager Collection (Server Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/resource-managers':
+
+    description: The collection of Resource Manager operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    get:
+      summary: List the Resource Manager objects
+      description: List the Resource Manager objects
+      operationId: resource_manager_listServerScope
+      x-bhendi-operationId: resource_manager_list
+      x-bhendi-access: public
+      x-bhendi-scope: server
+      x-bhendi-stability: prototype
+      x-bhendi-cli: resource-managers:list --scope server
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/resource-manager-server-scope#list'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceManagerList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/ResourceManagerList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Resource Manager'
+        - 'Resource: Resource Manager (Server Scope)'
+
+  #---------------------------------------------------------------------------
+  # Resource Manager Object (Server Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/resource-managers/{resource-manager}':
+
+    description: Resource Manager object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/resource-manager'
+
+    get:
+      summary: Get the Resource Manager object by name or id
+      description: Get the Resource Manager object by name or id
+      operationId: resource_manager_getServerScope
+      x-bhendi-operationId: resource_manager_get
+      x-bhendi-access: public
+      x-bhendi-scope: server
+      x-bhendi-stability: prototype
+      x-bhendi-cli: resource-managers:get --scope server
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/resource-manager-server-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceManager'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/ResourceManager'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Resource Manager'
+        - 'Resource: Resource Manager (Server Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Rest API Collection (Server Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis':
+
+    description: The collection of Rest API operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    get:
+      summary: List the Rest API objects
+      description: List the Rest API objects
+      operationId: rest_api_listServerScope
+      x-bhendi-operationId: rest_api_list
+      x-bhendi-access: public
+      x-bhendi-scope: server
+      x-bhendi-stability: prototype
+      x-bhendi-cli: rest-apis:list --scope server
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/rest-api-server-scope#list'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAPIList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/RestAPIList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Rest API'
+        - 'Resource: Rest API (Server Scope)'
+
+  #---------------------------------------------------------------------------
+  # Rest API Object (Server Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}':
+
+    description: Rest API object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+
+    get:
+      summary: Get the Rest API object by name or id
+      description: Get the Rest API object by name or id
+      operationId: rest_api_getServerScope
+      x-bhendi-operationId: rest_api_get
+      x-bhendi-access: public
+      x-bhendi-scope: server
+      x-bhendi-stability: prototype
+      x-bhendi-cli: rest-apis:get --scope server
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/rest-api-server-scope#get'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAPI'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/RestAPI'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Rest API'
+        - 'Resource: Rest API (Server Scope)'
+
+    delete:
+      summary: Delete the Rest API object by name or id
+      description: Delete the Rest API object by name or id
+      operationId: rest_api_delServerScope
+      x-bhendi-operationId: rest_api_del
+      x-bhendi-access: public
+      x-bhendi-scope: server
+      x-bhendi-stability: prototype
+      x-bhendi-cli: rest-apis:delete --scope server
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/rest-api-server-scope#del'
+      responses:
+        '200':
+          description: Successful delete
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestAPI'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/RestAPI'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Rest API'
+        - 'Resource: Rest API (Server Scope)'
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Rest API Object (Server Scope) - Setup
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}/setup':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+
+    post:
+      summary: Setup
+      description: Setup this rest_api
+      operationId: rest_api_setup
+      x-bhendi-operationId: rest_api_setup
+      x-bhendi-stability: prototype
+      x-bhendi-cli: rest-apis:setup
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/rest-api-server-scope#setup'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Rest API'
+        - 'Resource: Rest API (Server Scope)'
+
+
+  #---------------------------------------------------------------------------
+  # Rest API Object (Server Scope) - Start
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}/start':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+
+    post:
+      summary: Start
+      description: Start this rest_api
+      operationId: rest_api_start
+      x-bhendi-operationId: rest_api_start
+      x-bhendi-stability: prototype
+      x-bhendi-cli: rest-apis:start
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/rest-api-server-scope#start'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Rest API'
+        - 'Resource: Rest API (Server Scope)'
+
+
+
+  #---------------------------------------------------------------------------
+  # Rest API Object (Server Scope) - Stop
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}/stop':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+
+    post:
+      summary: Stop
+      description: Stop this rest_api
+      operationId: rest_api_stop
+      x-bhendi-operationId: rest_api_stop
+      x-bhendi-stability: prototype
+      x-bhendi-cli: rest-apis:stop
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/rest-api-server-scope#stop'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Rest API'
+        - 'Resource: Rest API (Server Scope)'
+
+
+
+  #---------------------------------------------------------------------------
+  # Rest API Object (Server Scope) - Tear Down Integrations
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}/teardown':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+
+    post:
+      summary: Tear down
+      description: Tear down this rest_api
+      operationId: rest_api_teardown
+      x-bhendi-operationId: rest_api_teardown
+      x-bhendi-stability: prototype
+      x-bhendi-cli: rest-apis:teardown
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/rest-api-server-scope#teardown'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Rest API'
+        - 'Resource: Rest API (Server Scope)'
+
+  #---------------------------------------------------------------------------
+  # Rest API Object (Server Scope) - Validate
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}/validate':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+
+    post:
+      summary: Validate this rest_api
+      description: Validate this rest_api
+      operationId: rest_api_validate
+      x-bhendi-operationId: rest_api_validate
+      x-bhendi-stability: prototype
+      x-bhendi-cli: rest-apis:validate
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/rest-api-server-scope#validate'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Rest API'
+        - 'Resource: Rest API (Server Scope)'
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Document Object (RestApi Scope) (Singleton)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}/document':
+
+    description: Document object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+
+    get:
+      summary: Get the Document object
+      description: Get the OpenAPI document for this ReST API
+      operationId: document_singletonGetRestApiScope
+      x-bhendi-operationId: document_singletonGet
+      x-bhendi-access: public
+      x-bhendi-scope: rest-api
+      x-bhendi-stability: prototype
+      x-bhendi-cli: document:get --scope rest-api
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/document-rest-api-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Document'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Document'
+        - 'Resource: Document (RestApi Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Service Collection (Server Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services':
+
+    description: The collection of Service operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    get:
+      summary: List the Service objects
+      description: List the Service objects
+      operationId: service_listServerScope
+      x-bhendi-operationId: service_list
+      x-bhendi-access: public
+      x-bhendi-scope: server
+      x-bhendi-stability: prototype
+      x-bhendi-cli: services:list --scope server
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/service-server-scope#list'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/ServiceList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Service'
+        - 'Resource: Service (Server Scope)'
+
+  #---------------------------------------------------------------------------
+  # Service Object (Server Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services/{service}':
+
+    description: Service object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/service'
+
+    get:
+      summary: Get the Service object by name or id
+      description: Get the Service object by name or id
+      operationId: service_getServerScope
+      x-bhendi-operationId: service_get
+      x-bhendi-access: public
+      x-bhendi-scope: server
+      x-bhendi-stability: prototype
+      x-bhendi-cli: services:get --scope server
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/service-server-scope#get'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Service'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Service'
+        - 'Resource: Service (Server Scope)'
+
+    delete:
+      summary: Delete the Service object by name or id
+      description: Delete the Service object by name or id
+      operationId: service_delServerScope
+      x-bhendi-operationId: service_del
+      x-bhendi-access: public
+      x-bhendi-scope: server
+      x-bhendi-stability: prototype
+      x-bhendi-cli: services:delete --scope server
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/service-server-scope#del'
+      responses:
+        '200':
+          description: Successful delete
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Service'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Service'
+        - 'Resource: Service (Server Scope)'
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Service Object (Server Scope) - Setup
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services/{service}/setup':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/service'
+
+    post:
+      summary: Setup
+      description: Setup this service
+      operationId: service_setup
+      x-bhendi-operationId: service_setup
+      x-bhendi-stability: prototype
+      x-bhendi-cli: services:setup
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/service-server-scope#setup'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Service'
+        - 'Resource: Service (Server Scope)'
+
+
+  #---------------------------------------------------------------------------
+  # Service Object (Server Scope) - Start
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services/{service}/start':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/service'
+
+    post:
+      summary: Start
+      description: Start this service
+      operationId: service_start
+      x-bhendi-operationId: service_start
+      x-bhendi-stability: prototype
+      x-bhendi-cli: services:start
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/service-server-scope#start'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Service'
+        - 'Resource: Service (Server Scope)'
+
+
+
+  #---------------------------------------------------------------------------
+  # Service Object (Server Scope) - Stop
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services/{service}/stop':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/service'
+
+    post:
+      summary: Stop
+      description: Stop this service
+      operationId: service_stop
+      x-bhendi-operationId: service_stop
+      x-bhendi-stability: prototype
+      x-bhendi-cli: services:stop
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/service-server-scope#stop'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Service'
+        - 'Resource: Service (Server Scope)'
+
+
+
+  #---------------------------------------------------------------------------
+  # Service Object (Server Scope) - Tear Down Integrations
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services/{service}/teardown':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/service'
+
+    post:
+      summary: Tear down
+      description: Tear down this service
+      operationId: service_teardown
+      x-bhendi-operationId: service_teardown
+      x-bhendi-stability: prototype
+      x-bhendi-cli: services:teardown
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/service-server-scope#teardown'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Service'
+        - 'Resource: Service (Server Scope)'
+
+  #---------------------------------------------------------------------------
+  # Service Object (Server Scope) - Validate
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services/{service}/validate':
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/service'
+
+    post:
+      summary: Validate this service
+      description: Validate this service
+      operationId: service_validate
+      x-bhendi-operationId: service_validate
+      x-bhendi-stability: prototype
+      x-bhendi-cli: services:validate
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-access: public
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/service-server-scope#validate'
+      responses:
+        '200':
+          description: Success
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Service'
+        - 'Resource: Service (Server Scope)'
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Shared Library Collection (Server Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/shared-libraries':
+
+    description: The collection of Shared Library operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+
+    get:
+      summary: List the Shared Library objects
+      description: List the Shared Library objects
+      operationId: shared_library_listServerScope
+      x-bhendi-operationId: shared_library_list
+      x-bhendi-access: public
+      x-bhendi-scope: server
+      x-bhendi-stability: prototype
+      x-bhendi-cli: shared-libraries:list --scope server
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/shared-library-server-scope#list'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedLibraryList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/SharedLibraryList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Shared Library'
+        - 'Resource: Shared Library (Server Scope)'
+
+  #---------------------------------------------------------------------------
+  # Shared Library Object (Server Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/shared-libraries/{shared-library}':
+
+    description: Shared Library object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/shared-library'
+
+    get:
+      summary: Get the Shared Library object by name or id
+      description: Get the Shared Library object by name or id
+      operationId: shared_library_getServerScope
+      x-bhendi-operationId: shared_library_get
+      x-bhendi-access: public
+      x-bhendi-scope: server
+      x-bhendi-stability: prototype
+      x-bhendi-cli: shared-libraries:get --scope server
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/shared-library-server-scope#get'
+      parameters:
+        - $ref: '#/components/parameters/depth'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedLibrary'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/SharedLibrary'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Shared Library'
+        - 'Resource: Shared Library (Server Scope)'
+
+    delete:
+      summary: Delete the Shared Library object by name or id
+      description: Delete the Shared Library object by name or id
+      operationId: shared_library_delServerScope
+      x-bhendi-operationId: shared_library_del
+      x-bhendi-access: public
+      x-bhendi-scope: server
+      x-bhendi-stability: prototype
+      x-bhendi-cli: shared-libraries:delete --scope server
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/shared-library-server-scope#del'
+      responses:
+        '200':
+          description: Successful delete
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedLibrary'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/SharedLibrary'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Shared Library'
+        - 'Resource: Shared Library (Server Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Subflow Collection (Application Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications/{application}/subflows':
+
+    description: The collection of Subflow operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/application'
+
+    get:
+      summary: List the Subflow objects
+      description: List the Subflow objects
+      operationId: subflow_listApplicationScope
+      x-bhendi-operationId: subflow_list
+      x-bhendi-access: public
+      x-bhendi-scope: application
+      x-bhendi-stability: prototype
+      x-bhendi-cli: sub-flows:list --scope application
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/subflow-application-scope#list'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubflowList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/SubflowList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Subflow'
+        - 'Resource: Subflow (Application Scope)'
+
+  #---------------------------------------------------------------------------
+  # Subflow Object (Application Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications/{application}/subflows/{subflow}':
+
+    description: Subflow object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/application'
+      - $ref: '#/components/parameters/subflow'
+
+    get:
+      summary: Get the Subflow object by name or id
+      description: Get the Subflow object by name or id
+      operationId: subflow_getApplicationScope
+      x-bhendi-operationId: subflow_get
+      x-bhendi-access: public
+      x-bhendi-scope: application
+      x-bhendi-stability: prototype
+      x-bhendi-cli: sub-flows:get --scope application
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/subflow-application-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subflow'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Subflow'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Subflow'
+        - 'Resource: Subflow (Application Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Subflow Collection (RestApi Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}/subflows':
+
+    description: The collection of Subflow operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+
+    get:
+      summary: List the Subflow objects
+      description: List the Subflow objects
+      operationId: subflow_listRestApiScope
+      x-bhendi-operationId: subflow_list
+      x-bhendi-access: public
+      x-bhendi-scope: rest-api
+      x-bhendi-stability: prototype
+      x-bhendi-cli: sub-flows:list --scope rest-api
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/subflow-rest-api-scope#list'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubflowList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/SubflowList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Subflow'
+        - 'Resource: Subflow (RestApi Scope)'
+
+  #---------------------------------------------------------------------------
+  # Subflow Object (RestApi Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}/subflows/{subflow}':
+
+    description: Subflow object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+      - $ref: '#/components/parameters/subflow'
+
+    get:
+      summary: Get the Subflow object by name or id
+      description: Get the Subflow object by name or id
+      operationId: subflow_getRestApiScope
+      x-bhendi-operationId: subflow_get
+      x-bhendi-access: public
+      x-bhendi-scope: rest-api
+      x-bhendi-stability: prototype
+      x-bhendi-cli: sub-flows:get --scope rest-api
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/subflow-rest-api-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subflow'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Subflow'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Subflow'
+        - 'Resource: Subflow (RestApi Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Subflow Collection (Service Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services/{service}/subflows':
+
+    description: The collection of Subflow operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/service'
+
+    get:
+      summary: List the Subflow objects
+      description: List the Subflow objects
+      operationId: subflow_listServiceScope
+      x-bhendi-operationId: subflow_list
+      x-bhendi-access: public
+      x-bhendi-scope: service
+      x-bhendi-stability: prototype
+      x-bhendi-cli: sub-flows:list --scope service
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/subflow-service-scope#list'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubflowList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/SubflowList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Subflow'
+        - 'Resource: Subflow (Service Scope)'
+
+  #---------------------------------------------------------------------------
+  # Subflow Object (Service Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services/{service}/subflows/{subflow}':
+
+    description: Subflow object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/service'
+      - $ref: '#/components/parameters/subflow'
+
+    get:
+      summary: Get the Subflow object by name or id
+      description: Get the Subflow object by name or id
+      operationId: subflow_getServiceScope
+      x-bhendi-operationId: subflow_get
+      x-bhendi-access: public
+      x-bhendi-scope: service
+      x-bhendi-stability: prototype
+      x-bhendi-cli: sub-flows:get --scope service
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/subflow-service-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subflow'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Subflow'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Subflow'
+        - 'Resource: Subflow (Service Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Subflow Collection (SharedLibrary Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/shared-libraries/{shared-library}/subflows':
+
+    description: The collection of Subflow operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/shared-library'
+
+    get:
+      summary: List the Subflow objects
+      description: List the Subflow objects
+      operationId: subflow_listSharedLibraryScope
+      x-bhendi-operationId: subflow_list
+      x-bhendi-access: public
+      x-bhendi-scope: shared-library
+      x-bhendi-stability: prototype
+      x-bhendi-cli: sub-flows:list --scope shared-library
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/subflow-shared-library-scope#list'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubflowList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/SubflowList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Subflow'
+        - 'Resource: Subflow (SharedLibrary Scope)'
+
+  #---------------------------------------------------------------------------
+  # Subflow Object (SharedLibrary Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/shared-libraries/{shared-library}/subflows/{subflow}':
+
+    description: Subflow object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/shared-library'
+      - $ref: '#/components/parameters/subflow'
+
+    get:
+      summary: Get the Subflow object by name or id
+      description: Get the Subflow object by name or id
+      operationId: subflow_getSharedLibraryScope
+      x-bhendi-operationId: subflow_get
+      x-bhendi-access: public
+      x-bhendi-scope: shared-library
+      x-bhendi-stability: prototype
+      x-bhendi-cli: sub-flows:get --scope shared-library
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/subflow-shared-library-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subflow'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Subflow'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Subflow'
+        - 'Resource: Subflow (SharedLibrary Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Subflow Collection (ApplicationLibrary Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications/{application}/libraries/{library}/subflows':
+
+    description: The collection of Subflow operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/application'
+      - $ref: '#/components/parameters/library'
+
+    get:
+      summary: List the Subflow objects
+      description: List the Subflow objects
+      operationId: subflow_listApplicationLibraryScope
+      x-bhendi-operationId: subflow_list
+      x-bhendi-access: public
+      x-bhendi-scope: application-library
+      x-bhendi-stability: prototype
+      x-bhendi-cli: sub-flows:list --scope application-library
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/subflow-application-library-scope#list'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubflowList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/SubflowList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Subflow'
+        - 'Resource: Subflow (ApplicationLibrary Scope)'
+
+  #---------------------------------------------------------------------------
+  # Subflow Object (ApplicationLibrary Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/applications/{application}/libraries/{library}/subflows/{subflow}':
+
+    description: Subflow object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/application'
+      - $ref: '#/components/parameters/library'
+      - $ref: '#/components/parameters/subflow'
+
+    get:
+      summary: Get the Subflow object by name or id
+      description: Get the Subflow object by name or id
+      operationId: subflow_getApplicationLibraryScope
+      x-bhendi-operationId: subflow_get
+      x-bhendi-access: public
+      x-bhendi-scope: application-library
+      x-bhendi-stability: prototype
+      x-bhendi-cli: sub-flows:get --scope application-library
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/subflow-application-library-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subflow'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Subflow'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Subflow'
+        - 'Resource: Subflow (ApplicationLibrary Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Subflow Collection (RestApiLibrary Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}/libraries/{library}/subflows':
+
+    description: The collection of Subflow operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+      - $ref: '#/components/parameters/library'
+
+    get:
+      summary: List the Subflow objects
+      description: List the Subflow objects
+      operationId: subflow_listRestApiLibraryScope
+      x-bhendi-operationId: subflow_list
+      x-bhendi-access: public
+      x-bhendi-scope: rest-api-library
+      x-bhendi-stability: prototype
+      x-bhendi-cli: sub-flows:list --scope rest-api-library
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/subflow-rest-api-library-scope#list'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubflowList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/SubflowList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Subflow'
+        - 'Resource: Subflow (RestApiLibrary Scope)'
+
+  #---------------------------------------------------------------------------
+  # Subflow Object (RestApiLibrary Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/rest-apis/{rest-api}/libraries/{library}/subflows/{subflow}':
+
+    description: Subflow object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/rest-api'
+      - $ref: '#/components/parameters/library'
+      - $ref: '#/components/parameters/subflow'
+
+    get:
+      summary: Get the Subflow object by name or id
+      description: Get the Subflow object by name or id
+      operationId: subflow_getRestApiLibraryScope
+      x-bhendi-operationId: subflow_get
+      x-bhendi-access: public
+      x-bhendi-scope: rest-api-library
+      x-bhendi-stability: prototype
+      x-bhendi-cli: sub-flows:get --scope rest-api-library
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/subflow-rest-api-library-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subflow'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Subflow'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Subflow'
+        - 'Resource: Subflow (RestApiLibrary Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #---------------------------------------------------------------------------
+  # Subflow Collection (ServiceLibrary Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services/{service}/libraries/{library}/subflows':
+
+    description: The collection of Subflow operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/service'
+      - $ref: '#/components/parameters/library'
+
+    get:
+      summary: List the Subflow objects
+      description: List the Subflow objects
+      operationId: subflow_listServiceLibraryScope
+      x-bhendi-operationId: subflow_list
+      x-bhendi-access: public
+      x-bhendi-scope: service-library
+      x-bhendi-stability: prototype
+      x-bhendi-cli: sub-flows:list --scope service-library
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/subflow-service-library-scope#list'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubflowList'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/SubflowList'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Subflow'
+        - 'Resource: Subflow (ServiceLibrary Scope)'
+
+  #---------------------------------------------------------------------------
+  # Subflow Object (ServiceLibrary Scope)
+  #---------------------------------------------------------------------------
+  '/servers/{server}/services/{service}/libraries/{library}/subflows/{subflow}':
+
+    description: Subflow object operations
+
+    parameters:
+      - $ref: '#/components/parameters/server'
+      - $ref: '#/components/parameters/service'
+      - $ref: '#/components/parameters/library'
+      - $ref: '#/components/parameters/subflow'
+
+    get:
+      summary: Get the Subflow object by name or id
+      description: Get the Subflow object by name or id
+      operationId: subflow_getServiceLibraryScope
+      x-bhendi-operationId: subflow_get
+      x-bhendi-access: public
+      x-bhendi-scope: service-library
+      x-bhendi-stability: prototype
+      x-bhendi-cli: sub-flows:get --scope service-library
+      x-bhendi-cli-stability: prototype
+      x-bhendi-authorized-orgs: both
+      x-bhendi-oauth-required: false
+      x-bhendi-permission-required: false
+      externalDocs:
+        description: Additional documentation
+        url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis/subflow-service-library-scope#get'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subflow'
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/Subflow'
+        5XX:
+          $ref: '#/components/responses/Error'
+      tags:
+        - 'Subflow'
+        - 'Resource: Subflow (ServiceLibrary Scope)'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+security:
+  - basic: []
+
+components:
+
+  securitySchemes:
+    basic:
+      type: http
+      scheme: basic
+
+  #=============================================================================
+  # Parameters Components
+  #=============================================================================
+  parameters:
+
+    #---------------------------------------------------------------------------
+    # application (Parameter for Application)
+    #---------------------------------------------------------------------------
+    application:
+      name: application
+      in: path
+      description: Application name or id
+      required: true
+      schema:
+        type: string
+
+    #---------------------------------------------------------------------------
+    # component (Parameter for Component)
+    #---------------------------------------------------------------------------
+    component:
+      name: component
+      in: path
+      description: Component name or id
+      required: true
+      schema:
+        type: string
+
+    #---------------------------------------------------------------------------
+    # delete-all
+    #---------------------------------------------------------------------------
+    delete-all:
+      name: delete-all
+      in: query
+      description: Delete all content before deploying
+      required: false
+      schema:
+        type: boolean
+
+    #---------------------------------------------------------------------------
+    # depth
+    #---------------------------------------------------------------------------
+    depth:
+      name: depth
+      in: query
+      description: return children down to specified depth
+      required: false
+      schema:
+        type: integer
+
+    #---------------------------------------------------------------------------
+    # library (Parameter for Library)
+    #---------------------------------------------------------------------------
+    library:
+      name: library
+      in: path
+      description: Library name or id
+      required: true
+      schema:
+        type: string
+
+    #---------------------------------------------------------------------------
+    # messageflow (Parameter for Messageflow)
+    #---------------------------------------------------------------------------
+    messageflow:
+      name: messageflow
+      in: path
+      description: Messageflow name or id
+      required: true
+      schema:
+        type: string
+
+    #---------------------------------------------------------------------------
+    # names
+    #---------------------------------------------------------------------------
+    names:
+      name: names
+      in: query
+      description: A colon-delimited set of deployed artifact names to delete
+      required: true
+      schema:
+        type: string
+
+    #---------------------------------------------------------------------------
+    # order
+    #---------------------------------------------------------------------------
+    order:
+      name: order
+      in: query
+      description: return items in the given order
+      required: false
+      schema:
+        type: string
+
+    #---------------------------------------------------------------------------
+    # policy
+    #---------------------------------------------------------------------------
+    policy:
+      name: policy
+      in: path
+      description: the name of the policy
+      required: true
+      schema:
+        type: string
+
+    #---------------------------------------------------------------------------
+    # policy-project
+    #---------------------------------------------------------------------------
+    policy-project:
+      name: policy-project
+      in: path
+      description: the name of the policy project
+      required: true
+      schema:
+        type: string
+
+    #---------------------------------------------------------------------------
+    # resource (Parameter for Resource)
+    #---------------------------------------------------------------------------
+    resource:
+      name: resource
+      in: path
+      description: Resource name or id
+      required: true
+      schema:
+        type: string
+
+    #---------------------------------------------------------------------------
+    # resource-manager (Parameter for Resource Manager)
+    #---------------------------------------------------------------------------
+    resource-manager:
+      name: resource-manager
+      in: path
+      description: Resource Manager name or id
+      required: true
+      schema:
+        type: string
+
+    #---------------------------------------------------------------------------
+    # rest-api (Parameter for Rest API)
+    #---------------------------------------------------------------------------
+    rest-api:
+      name: rest-api
+      in: path
+      description: Rest API name or id
+      required: true
+      schema:
+        type: string
+
+    #---------------------------------------------------------------------------
+    # search
+    #---------------------------------------------------------------------------
+    search:
+      name: search
+      in: query
+      description: return only items matching a given string
+      required: false
+      schema:
+        type: string
+
+    #---------------------------------------------------------------------------
+    # server (Parameter for Server)
+    #---------------------------------------------------------------------------
+    server:
+      name: server
+      in: path
+      description: Server name or id
+      required: true
+      schema:
+        type: string
+
+    #---------------------------------------------------------------------------
+    # service (Parameter for Service)
+    #---------------------------------------------------------------------------
+    service:
+      name: service
+      in: path
+      description: Service name or id
+      required: true
+      schema:
+        type: string
+
+    #---------------------------------------------------------------------------
+    # shared-library (Parameter for Shared Library)
+    #---------------------------------------------------------------------------
+    shared-library:
+      name: shared-library
+      in: path
+      description: Shared Library name or id
+      required: true
+      schema:
+        type: string
+
+    #---------------------------------------------------------------------------
+    # subflow (Parameter for Subflow)
+    #---------------------------------------------------------------------------
+    subflow:
+      name: subflow
+      in: path
+      description: Subflow name or id
+      required: true
+      schema:
+        type: string
+
+
+  #=============================================================================
+  # Header Components
+  #=============================================================================
+  headers:
+
+    #---------------------------------------------------------------------------
+    # Location 
+    #---------------------------------------------------------------------------
+    Location:
+      description: location of newly created item
+      schema:
+        type: string
+
+  #=============================================================================
+  # Schema Components
+  #=============================================================================
+  schemas:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #---------------------------------------------------------------------------
+    # PropertyMap 
+    #---------------------------------------------------------------------------
+    PropertyMap:
+      example:
+        name: my-name
+      type: object
+      additionalProperties:
+        oneOf:
+          - type: string
+          - type: number
+          - type: boolean
+
+    #---------------------------------------------------------------------------
+    # DescriptivePropertyMap 
+    #---------------------------------------------------------------------------
+    DescriptivePropertyMap:
+      example:
+        state: started
+        isRunning: true
+      type: object
+      additionalProperties:
+        oneOf:
+          - type: string
+          - type: number
+          - type: boolean
+
+    #---------------------------------------------------------------------------
+    # ActiveMap 
+    #---------------------------------------------------------------------------
+    ActiveMap:
+      example:
+        pid: 1234
+      type: object
+      additionalProperties:
+        oneOf:
+          - type: string
+          - type: number
+          - type: boolean
+
+    #---------------------------------------------------------------------------
+    # LinkList 
+    #---------------------------------------------------------------------------
+    LinkList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Link'
+
+    #---------------------------------------------------------------------------
+    # Link 
+    #---------------------------------------------------------------------------
+    Link:
+      example:
+        definitionType: static
+        name: policy link
+        type: link
+        uri: /policies/my-policy
+      type: object
+      required:
+        - definitionType
+        - name
+        - type
+        - uri
+      properties:
+        definitionType:
+          type: string
+          enum:
+            - dynamic
+            - static
+        name:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+        type:
+          type: string
+          enum:
+            - link
+        uri:
+          type: string
+
+    #---------------------------------------------------------------------------
+    # DeployMultipart 
+    #---------------------------------------------------------------------------
+    DeployMultipart:
+      type: object
+      additionalProperties: true
+
+    #---------------------------------------------------------------------------
+    # Actions 
+    #---------------------------------------------------------------------------
+    Actions:
+      example:
+        available:
+          start: <my-uri>/start
+        unavailable:
+          stop: <my-uri>/stop
+      type: object
+      properties:
+        available:
+          type: object
+          additionalProperties:
+            type: string
+        unavailable:
+          type: object
+          additionalProperties:
+            type: string
+
+    #---------------------------------------------------------------------------
+    # CreateServer 
+    #---------------------------------------------------------------------------
+    CreateServer:
+      example:
+        name: my-new-server
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+
+    #---------------------------------------------------------------------------
+    # ServerList 
+    #---------------------------------------------------------------------------
+    ServerList:
+      example:
+        name: servers
+        type: integrationServers
+        hasChildren: true
+        children:
+          - name: my-server
+            type: integrationServer
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - integrationServers
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Server'
+
+    #---------------------------------------------------------------------------
+    # Server 
+    #---------------------------------------------------------------------------
+    Server:
+      example:
+        name: my-server
+        type: integrationServer
+        hasChildren: true
+        properties:
+          jvmMaxHeapSize: 268435456
+          jvmMinHeapSize: 33554432
+        descriptiveProperties:
+          version: 11.0.0.0
+        active:
+          processId: 67121
+        children:
+          applications:
+            name: applications
+            hasChildren: true
+            children:
+              - name: my-application
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - integrationServer
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        children:
+          type: object
+          properties:
+            applications:
+              $ref: '#/components/schemas/ApplicationList'
+            restApis:
+              $ref: '#/components/schemas/RestAPIList'
+            services:
+              $ref: '#/components/schemas/ServiceList'
+            sharedLibraries:
+              $ref: '#/components/schemas/SharedLibraryList'
+            resourceManagers:
+              $ref: '#/components/schemas/ResourceManagerList'
+            policies:
+              $ref: '#/components/schemas/PolicyProjectList'
+      required:
+        - name
+
+    #---------------------------------------------------------------------------
+    # Node 
+    #---------------------------------------------------------------------------
+    Node:
+      example:
+        name: my-node
+        type: integrationNode
+        descriptiveProperties:
+          version: 11.0.0.0
+        children:
+          servers:
+            name: servers
+            hasChildren: true
+            children:
+              - name: my-server
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - integrationNode
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        children:
+          type: object
+          properties:
+            servers:
+              $ref: '#/components/schemas/ServerList'
+            components:
+              $ref: '#/components/schemas/ComponentList'
+            policies:
+              $ref: '#/components/schemas/PolicyList'
+
+    #---------------------------------------------------------------------------
+    # ComponentList 
+    #---------------------------------------------------------------------------
+    ComponentList:
+      example:
+        name: components
+        type: components
+        hasChildren: true
+        children:
+          - name: httplistener
+            type: component
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - components
+        uri:
+          type: string
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Component'
+
+    #---------------------------------------------------------------------------
+    # Component 
+    #---------------------------------------------------------------------------
+    Component:
+      example:
+        name: httplistener
+        hasChildren: false
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+          enum:
+            - pubsub
+            - httplistener
+            - securitycache
+            - cachemanager
+            - webadmin
+            - crlFile
+            - agent
+        type:
+          type: string
+          enum:
+            - component
+        uri:
+          type: string
+        children:
+          type: object
+          properties:
+            resourceManagers:
+              $ref: '#/components/schemas/ResourceManagerList'
+
+    #---------------------------------------------------------------------------
+    # ApplicationList 
+    #---------------------------------------------------------------------------
+    ApplicationList:
+      example:
+        name: applications
+        type: applications
+        hasChildren: true
+        children:
+          - name: my-application
+            type: application
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - applications
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Application'
+
+    #---------------------------------------------------------------------------
+    # Application 
+    #---------------------------------------------------------------------------
+    Application:
+      example:
+        name: my-application
+        type: application
+        hasChildren: true
+        properties:
+          startMode: Maintained
+        descriptiveProperties:
+          shortDesc: A quick sample application
+        active:
+          isRunning: true
+          state: stateStarted
+        children:
+          messageFlows:
+            name: messageFlows
+            hasChildren: true
+            children:
+              - name: my-message-flow
+                type: messageFlow
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - application
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        links:
+          $ref: '#/components/schemas/LinkList'
+        children:
+          type: object
+          properties:
+            messageFlows:
+              $ref: '#/components/schemas/MessageflowList'
+            subFlows:
+              $ref: '#/components/schemas/SubflowList'
+            libraries:
+              $ref: '#/components/schemas/LibraryList'
+            resources:
+              $ref: '#/components/schemas/ResourceList'
+
+    #---------------------------------------------------------------------------
+    # RestAPIList 
+    #---------------------------------------------------------------------------
+    RestAPIList:
+      example:
+        name: rest-apis
+        type: restApis
+        hasChildren: true
+        children:
+          - name: my-rest-api
+            type: restApi
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - restApis
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/RestAPI'
+
+    #---------------------------------------------------------------------------
+    # RestAPI 
+    #---------------------------------------------------------------------------
+    RestAPI:
+      example:
+        name: my-rest-api
+        type: restApi
+        hasChildren: true
+        properties:
+          startMode: Maintained
+        descriptiveProperties:
+          shortDesc: A quick sample ReST API
+        active:
+          isRunning: true
+          state: stateStarted
+        children:
+          messageFlows:
+            name: messageFlows
+            hasChildren: true
+            children:
+              - name: my-message-flow
+                type: messageFlow
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - restApi
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        links:
+          $ref: '#/components/schemas/LinkList'
+        children:
+          type: object
+          properties:
+            messageFlows:
+              $ref: '#/components/schemas/MessageflowList'
+            subFlows:
+              $ref: '#/components/schemas/SubflowList'
+            libraries:
+              $ref: '#/components/schemas/LibraryList'
+            resources:
+              $ref: '#/components/schemas/ResourceList'
+
+    #---------------------------------------------------------------------------
+    # ServiceList 
+    #---------------------------------------------------------------------------
+    ServiceList:
+      example:
+        name: services
+        type: services
+        hasChildren: true
+        children:
+          - name: my-service
+            type: service
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - services
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Service'
+
+    #---------------------------------------------------------------------------
+    # Service 
+    #---------------------------------------------------------------------------
+    Service:
+      example:
+        name: my-service
+        type: service
+        hasChildren: true
+        properties:
+          startMode: Maintained
+        descriptiveProperties:
+          shortDesc: A quick sample service
+        active:
+          isRunning: true
+          state: stateStarted
+        children:
+          messageFlows:
+            name: messageFlows
+            hasChildren: true
+            children:
+              - name: my-message-flow
+                type: messageFlow
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - service
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        links:
+          $ref: '#/components/schemas/LinkList'
+        children:
+          type: object
+          properties:
+            messageFlows:
+              $ref: '#/components/schemas/MessageflowList'
+            subFlows:
+              $ref: '#/components/schemas/SubflowList'
+            libraries:
+              $ref: '#/components/schemas/LibraryList'
+            resources:
+              $ref: '#/components/schemas/ResourceList'
+
+    #---------------------------------------------------------------------------
+    # SharedLibraryList 
+    #---------------------------------------------------------------------------
+    SharedLibraryList:
+      example:
+        name: shared-libraries
+        type: sharedLibraries
+        hasChildren: true
+        children:
+          - name: my-shared-library
+            type: sharedLibrary
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - sharedLibraries
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/SharedLibrary'
+
+    #---------------------------------------------------------------------------
+    # SharedLibrary 
+    #---------------------------------------------------------------------------
+    SharedLibrary:
+      example:
+        name: my-shared-library
+        type: sharedLibrary
+        hasChildren: true
+        descriptiveProperties:
+          shortDesc: A quick sample shared library
+        children:
+          subFlows:
+            name: subFlows
+            hasChildren: true
+            children:
+              - name: my-sub-flow
+                type: subFlow
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - sharedLibrary
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        links:
+          $ref: '#/components/schemas/LinkList'
+        children:
+          type: object
+          properties:
+            messageFlows:
+              $ref: '#/components/schemas/MessageflowList'
+            subFlows:
+              $ref: '#/components/schemas/SubflowList'
+            resources:
+              $ref: '#/components/schemas/ResourceList'
+
+    #---------------------------------------------------------------------------
+    # MessageflowList 
+    #---------------------------------------------------------------------------
+    MessageflowList:
+      example:
+        name: messageflows
+        type: messageFlows
+        hasChildren: true
+        children:
+          - name: my-message-flow
+            type: messageFlow
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - messageFlows
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Messageflow'
+
+    #---------------------------------------------------------------------------
+    # Messageflow 
+    #---------------------------------------------------------------------------
+    Messageflow:
+      example:
+        name: my-message-flow
+        type: messageFlow
+        hasChildren: false
+        properties:
+          StatsArchivalOn: false
+          maximumRateMsgsPerSec: 0
+        descriptiveProperties:
+          shortDesc: A quick sample message flow
+        active:
+          isRunning: false
+          state: stateStopped
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        type:
+          type: string
+          enum:
+            - messageFlow
+
+    #---------------------------------------------------------------------------
+    # SubflowList 
+    #---------------------------------------------------------------------------
+    SubflowList:
+      example:
+        name: subflows
+        type: subFlows
+        hasChildren: true
+        children:
+          - name: my-sub-flow
+            type: subFlow
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - subFlows
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subflow'
+
+    #---------------------------------------------------------------------------
+    # Subflow 
+    #---------------------------------------------------------------------------
+    Subflow:
+      example:
+        name: my-sub-flow
+        type: subFlow
+        hasChildren: false
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - subFlow
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+
+    #---------------------------------------------------------------------------
+    # LibraryList 
+    #---------------------------------------------------------------------------
+    LibraryList:
+      example:
+        name: libraries
+        type: libraries
+        hasChildren: true
+        children:
+          - name: my-library
+            type: library
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - libraries
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Library'
+
+    #---------------------------------------------------------------------------
+    # Library 
+    #---------------------------------------------------------------------------
+    Library:
+      example:
+        name: my-library
+        type: library
+        hasChildren: true
+        descriptiveProperties:
+          shortDesc: A quick sample library
+        children:
+          subFlows:
+            name: subFlows
+            hasChildren: true
+            children:
+              - name: my-sub-flow
+                type: subFlow
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - library
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        children:
+          type: object
+          properties:
+            messageFlows:
+              $ref: '#/components/schemas/MessageflowList'
+            subFlows:
+              $ref: '#/components/schemas/SubflowList'
+            resources:
+              $ref: '#/components/schemas/ResourceList'
+
+    #---------------------------------------------------------------------------
+    # ResourceList 
+    #---------------------------------------------------------------------------
+    ResourceList:
+      example:
+        name: resources
+        type: resources
+        hasChildren: true
+        children:
+          - name: my-resource
+            type: resource
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - resources
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+
+    #---------------------------------------------------------------------------
+    # Resource 
+    #---------------------------------------------------------------------------
+    Resource:
+      example:
+        name: my-resource
+        type: resource
+        hasChildren: false
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - resource
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+
+    #---------------------------------------------------------------------------
+    # ResourceManagerList 
+    #---------------------------------------------------------------------------
+    ResourceManagerList:
+      example:
+        name: resource-managers
+        type: resourceManagers
+        hasChildren: true
+        children:
+          - name: my-resource-manager
+            type: resourceManager
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - resourceManagers
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceManager'
+
+    #---------------------------------------------------------------------------
+    # ResourceManager 
+    #---------------------------------------------------------------------------
+    ResourceManager:
+      example:
+        name: my-resource-manager
+        type: resourceManager
+        hasChildren: false
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - resourceManager
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+
+    #---------------------------------------------------------------------------
+    # PolicyProjectList 
+    #---------------------------------------------------------------------------
+    PolicyProjectList:
+      example:
+        name: my-policy-projects
+        type: policyProjects
+        hasChildren: true
+        children:
+          - name: my-policy-project
+            type: policyProject
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - policies
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyProject'
+
+    #---------------------------------------------------------------------------
+    # PolicyProject 
+    #---------------------------------------------------------------------------
+    PolicyProject:
+      example:
+        name: policy-project
+        type: policyProject
+        hasChildren: true
+        children:
+          - name: my-policy
+            type: policy
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - policyProject
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Policy'
+
+    #---------------------------------------------------------------------------
+    # PolicyList 
+    #---------------------------------------------------------------------------
+    PolicyList:
+      example:
+        name: my-policies
+        type: policies
+        hasChildren: true
+        children:
+          - name: my-policy
+            type: policy
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - policies
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Policy'
+
+    #---------------------------------------------------------------------------
+    # Policy 
+    #---------------------------------------------------------------------------
+    Policy:
+      example:
+        name: my-aggregation-policy
+        type: policy
+        properties:
+          name: my-aggregation-policy
+          queuePrefix: ''
+          timeoutInterval: 10
+          timeoutThreads: 1
+        descriptiveProperties:
+          policyType: Aggregation
+        hasChildren: false
+      type: object
+      properties:
+        hasChildren:
+          type: boolean
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - policy
+        uri:
+          type: string
+        properties:
+          $ref: '#/components/schemas/PropertyMap'
+        descriptiveProperties:
+          $ref: '#/components/schemas/DescriptivePropertyMap'
+        active:
+          $ref: '#/components/schemas/ActiveMap'
+        actions:
+          $ref: '#/components/schemas/Actions'
+        links:
+          $ref: '#/components/schemas/LinkList'
+
+    #---------------------------------------------------------------------------
+    # System 
+    #---------------------------------------------------------------------------
+    System:
+      example:
+        type: integrationNode
+        security: basic
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - integrationNode
+        name:
+          type: string
+        security:
+          type: string
+          enum:
+            - basic
+            - none
+
+    #---------------------------------------------------------------------------
+    # Document 
+    #---------------------------------------------------------------------------
+    Document:
+      type: object
+      properties:
+        swagger:
+          type: string
+          enum:
+            - '2.0'
+        info:
+          type: object
+        host:
+          type: string
+        basePath:
+          type: string
+        schemes:
+          type: array
+          items:
+            type: string
+            enum:
+              - http
+              - https
+              - ws
+              - wss
+        consumes:
+          type: array
+          items:
+            type: string
+        produces:
+          type: array
+          items:
+            type: string
+        paths:
+          type: object
+        definitions:
+          type: object
+        parameters:
+          type: object
+        responses:
+          type: object
+        securityDefinitions:
+          type: object
+        security:
+          type: object
+        tags:
+          type: object
+        externalDocs:
+          type: object
+
+    #---------------------------------------------------------------------------
+    # Error 
+    #---------------------------------------------------------------------------
+    Error:
+      type: object
+      additionalProperties: false
+      properties:
+        message:
+          type: string
+
+  #===========================================================================
+  # Response Components
+  #===========================================================================
+  responses:
+
+    #---------------------------------------------------------------------------
+    # ClientError Returned for all 4XX responses
+    #---------------------------------------------------------------------------
+    ClientError:
+      description: Client error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        application/yaml:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    #---------------------------------------------------------------------------
+    # Error Returned for all 5XX responses
+    #---------------------------------------------------------------------------
+    Error:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        application/yaml:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+externalDocs:
+  description: Additional documentation
+  url: 'https://www.ibm.com/knowledge-center/api-connect/platform-apis'
 
