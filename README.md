@@ -14,10 +14,10 @@ https://<hostname>:<port>/apidocs
 ```
 For example on your local laptop this could be: https://localhost:7600/apidocs
 
-The ACE product installation stores this Open API definition in two separate files (one for integration nodes and one for integration servers):
+The ACE product installation provides two separate Open API definition files (one for integration nodes and one for integration servers):
 
-openapi-appconnectenterprise.yaml details the REST API for administering integration nodes.
-openapi-appconnectenterpriseserver.yaml details the REST API for administering integration servers.
+* openapi-appconnectenterprise.yaml details the REST API for administering integration nodes.
+* openapi-appconnectenterpriseserver.yaml details the REST API for administering integration servers.
 
 The two files are very similar, but the integration node offers a few more URL routes, and when using the integration node's API the URL paths will frequently contain additional sections to address a specific target server which is owned by the integration node.
 
