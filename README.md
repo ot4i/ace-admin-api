@@ -1,5 +1,5 @@
 # ace-admin-api
-IBM App Connect Enterprise provides an administrative REST API through which local or remote applications can administer ACE integration nodes and ACE integration servers.
+IBM App Connect Enterprise (ACE) provides an administrative REST API through which local or remote applications can administer ACE integration nodes and ACE integration servers.
 
 When users install ACE, and then create and configure an integration node, the integration node will serve a definition of its REST API specification over http/https on a URL accessible via its administration port: 
 ```
